@@ -1,14 +1,14 @@
 <ul class="nav nav-tabs" id="tabs" role="tablist">
     <li class="nav-item">
-        <a class="nav-link" [class.active]="isSelected(0)">All</a>
+        <a class="nav-link" [class.active]="isSelected(0)" (click)="select(0)">All</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" [class.active]="isSelected(1)">Powers</a>
+        <a class="nav-link" [class.active]="isSelected(1)" (click)="select(1)">Powers</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" [class.active]="isSelected(2)">Chewbacca</a>
+        <a class="nav-link" [class.active]="isSelected(2)" (click)="select(2)">Chewbacca</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" [class.active]="isSelected(3)">Ultimate Spider-Man</a>
+        <a class="nav-link" [class.active]="isSelected(3)" (click)="select(3)">Ultimate Spider-Man</a>
     </li>
 </ul>

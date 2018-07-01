@@ -12,4 +12,8 @@ export class TabBarComponent {
   isSelected(index: number): boolean {
     return this.tabIndex == index;
   };
+
+  select(index: number): void {
+    this.tabIndex = index;
+  }
 }
