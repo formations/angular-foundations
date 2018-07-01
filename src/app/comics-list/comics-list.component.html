@@ -1,13 +1,13 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="media">
-            <img class="mr-3" alt="Comic cover" src="assets/{{ thumbnail }}">
+            <img class="mr-3" alt="Comic cover" src="assets/{{ comic.thumbnail }}">
             <div class="media-body">
-                <h2 class="media-heading">{{ title }}
-                    <span class="badge badge-danger">#{{ issueNumber }}</span>
-                    <span class="badge badge-pill badge-secondary">${{ price }}</span>
+                <h2 class="media-heading">{{ comic.title }}
+                    <span class="badge badge-danger">#{{ comic.issueNumber }}</span>
+                    <span class="badge badge-pill badge-secondary">${{ comic.price }}</span>
                 </h2>
-                <p>{{ description }}</p>
+                <p>{{ comic.description }}</p>
             </div>
         </div>
     </div>
