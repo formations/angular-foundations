@@ -7,6 +7,7 @@ import { AboutComponent } from './about/about.component';
 import { TabBarComponent } from './tab-bar/tab-bar.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { ComicDetailComponent } from './comic-detail/comic-detail.component';
+import { ComicsListComponent } from './comics-list/comics-list.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ComicDetailComponent } from './comic-detail/comic-detail.component';
     AboutComponent,
     TabBarComponent,
     NavBarComponent,
-    ComicDetailComponent
+    ComicDetailComponent,
+    ComicsListComponent
   ],
   imports: [
     BrowserModule
