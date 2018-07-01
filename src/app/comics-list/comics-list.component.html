@@ -1,3 +1,14 @@
-<p>
-  comicslist works!
-</p>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="media">
+            <img class="mr-3" alt="Comic cover" src="assets/{{ thumbnail }}">
+            <div class="media-body">
+                <h2 class="media-heading">{{ title }}
+                    <span class="badge badge-danger">#{{ issueNumber }}</span>
+                    <span class="badge badge-pill badge-secondary">${{ price }}</span>
+                </h2>
+                <p>{{ description }}</p>
+            </div>
+        </div>
+    </div>
+</div>
