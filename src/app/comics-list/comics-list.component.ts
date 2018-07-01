@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SimpleComic } from '../model';
-import { COMIC } from '../data';
+import { Comic } from '../model';
+import { COMICS } from '../data';
 
 @Component({
   selector: 'app-comics-list',
@@ -9,5 +9,5 @@ import { COMIC } from '../data';
 })
 export class ComicsListComponent {
 
-  comic: SimpleComic = COMIC;
+  comics: Comic[] = COMICS;
 }

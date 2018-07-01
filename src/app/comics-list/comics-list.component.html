@@ -1,14 +1,12 @@
-<div class="row">
-    <div class="col-xs-12">
-        <div class="media">
-            <img class="mr-3" alt="Comic cover" src="assets/{{ comic.thumbnail }}">
-            <div class="media-body">
-                <h2 class="media-heading">{{ comic.title }}
-                    <span class="badge badge-danger">#{{ comic.issueNumber }}</span>
-                    <span class="badge badge-pill badge-secondary">${{ comic.price }}</span>
-                </h2>
-                <p>{{ comic.description }}</p>
-            </div>
+<ul class="list-unstyled">
+    <li class="media mt-5" *ngFor="let comic of comics">
+        <img class="mr-3" alt="Comic cover" src="assets/{{ comic.thumbnail.path }}.{{ comic.thumbnail.extension }}">
+        <div class="media-body">
+            <h2 class="media-heading">{{ comic.title }}
+                <span class="badge badge-danger">#{{ comic.issueNumber }}</span>
+                <span class="badge badge-pill badge-secondary">${{ comic.prices[0].price }}</span>
+            </h2>
+            <p>{{ comic.description }}</p>
         </div>
-    </div>
-</div>
+    </li>
+</ul>
