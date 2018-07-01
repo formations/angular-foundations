@@ -4,7 +4,7 @@
         <div class="media-body">
             <h2 class="media-heading">{{ comic.title }}
                 <span class="badge badge-danger">#{{ comic.issueNumber }}</span>
-                <span class="badge badge-pill badge-secondary">${{ comic.prices[0].price }}</span>
+                <span class="badge badge-pill badge-secondary" *ngIf="comic.prices[0].price > 0">${{ comic.prices[0].price }}</span>
             </h2>
             <p>{{ comic.description }}</p>
         </div>
