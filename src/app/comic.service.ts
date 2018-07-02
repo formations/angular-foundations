@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Comic } from './model';
 import { COMICS } from './data';
 
@@ -7,7 +8,7 @@ import { COMICS } from './data';
 })
 export class ComicService {
 
-  getComics(): Comic[] {
-    return COMICS;
+  getComics(): Observable<Comic[]> {
+    return of(COMICS);
   }
 }

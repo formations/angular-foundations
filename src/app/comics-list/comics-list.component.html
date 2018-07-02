@@ -1,6 +1,6 @@
 <app-tab-bar></app-tab-bar>
 <ul class="list-unstyled">
-    <li class="media mt-5" *ngFor="let comic of comics | sortByTitle">
+    <li class="media mt-5" *ngFor="let comic of comics$ | async | sortByTitle">
         <img class="mr-3" alt="Comic cover" src="assets/{{ comic.thumbnail.path }}.{{ comic.thumbnail.extension }}">
         <div class="media-body">
             <h2 class="media-heading">{{ comic.title }}
