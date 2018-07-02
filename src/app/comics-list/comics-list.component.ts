@@ -15,30 +15,21 @@ export class ComicsListComponent implements OnDestroy, OnInit {
   subscription: Subscription;
 
   constructor(private tabService: TabService) {
-    this.comics = COMICS.sort(this.byTitle);
+    this.comics = COMICS;
   }
 
   ngOnInit() {
     this.subscription = this.tabService.titleChanged$.subscribe(
       title => {
         if (title == null) {
-          this.comics = COMICS.sort(this.byTitle);
+          this.comics = COMICS;
         } else {
           this.comics = COMICS.filter(comic => comic.title.indexOf(title) > -1)
-                              .sort(this.byTitle);
         }
     });
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  }
-
-  private byTitle = (comic1, comic2) => {
-    let byTitle = comic1.title.localeCompare(comic2.title);
-    if (byTitle == 0) {
-      return comic1.issueNumber - comic2.issueNumber;
-    }
-    return byTitle;
   }
 }
