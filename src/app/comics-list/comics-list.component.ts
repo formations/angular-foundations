@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription }   from 'rxjs';
 import { Comic } from '../model';
-import { COMICS } from '../data';
 import { TabService } from '../tab.service';
+import { ComicService } from '../comic.service';
 
 @Component({
   selector: 'app-comics-list',
@@ -14,19 +14,19 @@ export class ComicsListComponent implements OnDestroy, OnInit {
   comics: Comic[];
   subscription: Subscription;
 
-  constructor(private tabService: TabService) {
-    this.comics = COMICS;
-  }
+  constructor(private tabService: TabService,
+              private comicService: ComicService) { }
 
   ngOnInit() {
     this.subscription = this.tabService.titleChanged$.subscribe(
       title => {
         if (title == null) {
-          this.comics = COMICS;
+          this.comics = this.comicService.getComics();
         } else {
-          this.comics = COMICS.filter(comic => comic.title.indexOf(title) > -1)
+          this.comics = this.comicService.getComics().filter(comic => comic.title.indexOf(title) > -1)
         }
     });
+    this.comics = this.comicService.getComics();
   }
 
   ngOnDestroy() {
