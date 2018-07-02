@@ -1,7 +1,6 @@
-<app-tab-bar></app-tab-bar>
 <ul class="list-unstyled">
-    <li class="media mt-5" *ngFor="let comic of comics$ | async | sortByTitle">
-        <img class="mr-3" alt="Comic cover" src="assets/{{ comic.thumbnail.path }}.{{ comic.thumbnail.extension }}">
+    <li class="media mt-5" *ngFor="let comic of comics$ | async">
+        <img class="mr-3" alt="Comic cover" src="{{ comic.thumbnail.path }}.{{ comic.thumbnail.extension }}">
         <div class="media-body">
             <h2 class="media-heading">{{ comic.title }}
                 <span class="badge badge-danger">#{{ comic.issueNumber }}</span>
