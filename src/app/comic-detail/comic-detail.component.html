@@ -1,0 +1,38 @@
+<div class="row">
+   <h2><!-- insert title -->
+       <span class="badge badge-danger">#<!-- insert issue number --></span>
+       <span class="badge badge-pill badge-secondary">$<!-- insert first price if it's positive --></span>
+   </h2>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <p><!-- insert description --></p>
+    </div>
+    <div class="col-sm-4"><!-- loop over images -->
+        <div class="thumbnail">
+            <img class="img-fluid"><!-- insert current image src inside tag -->
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-sm-4">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-success">Character(s) <span class="badge badge-pill badge-secondary"><!-- insert number of characters --></span>
+            <li class="list-group-item"><!-- insert current character name --></li><!-- loop over characters -->
+        </ul>
+    </div>
+    <div class="col-sm-4">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-success">Stories(s) <span class="badge badge-pill badge-secondary">{{ comic.stories.available }}</span>
+            <li class="list-group-item"><!-- insert current story name --></li><!-- loop over stories -->
+        </ul>
+    </div>
+    <div class="col-sm-4">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-success">Creator(s) <span class="badge badge-pill badge-secondary">{{ comic.creators.available }}</span>
+            <li class="list-group-item"><!-- loop over creators -->
+              <span class="badge badge-info"><!-- insert current creator role --></span><!-- insert current creator name -->
+            </li>
+        </ul>
+    </div>
+</div>
