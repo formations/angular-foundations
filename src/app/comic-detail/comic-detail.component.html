@@ -1,37 +1,37 @@
 <div class="row">
-   <h2><!-- insert title -->
-       <span class="badge badge-danger">#<!-- insert issue number --></span>
-       <span class="badge badge-pill badge-secondary">$<!-- insert first price if it's positive --></span>
+   <h2>{{ comic.title }}
+       <span class="badge badge-danger">#{{ comic.issueNumber }}</span>
+       <span class="badge badge-pill badge-secondary" *ngIf="comic.prices[0].price > 0">${{ comic.prices[0].price }}</span>
    </h2>
 </div>
 <div class="row">
     <div class="col-sm-4">
-        <p><!-- insert description --></p>
+        <p>{{ comic.description }}</p>
     </div>
-    <div class="col-sm-4"><!-- loop over images -->
+    <div class="col-sm-4" *ngFor="let image of comic.images">
         <div class="thumbnail">
-            <img class="img-fluid"><!-- insert current image src inside tag -->
+            <img class="img-fluid" src="{{ image.path }}.{{ image.extension }}">
         </div>
     </div>
 </div>
 <div class="row mt-3">
     <div class="col-sm-4">
         <ul class="list-group">
-            <li class="list-group-item list-group-item-success">Character(s) <span class="badge badge-pill badge-secondary"><!-- insert number of characters --></span>
-            <li class="list-group-item"><!-- insert current character name --></li><!-- loop over characters -->
+            <li class="list-group-item list-group-item-success">Character(s) <span class="badge badge-pill badge-secondary">{{ comic.characters.available }}</span>
+            <li class="list-group-item" *ngFor="let character of comic.characters.items">{{ character.name }}</li>
         </ul>
     </div>
     <div class="col-sm-4">
         <ul class="list-group">
             <li class="list-group-item list-group-item-success">Stories(s) <span class="badge badge-pill badge-secondary">{{ comic.stories.available }}</span>
-            <li class="list-group-item"><!-- insert current story name --></li><!-- loop over stories -->
+            <li class="list-group-item" *ngFor="let story of comic.stories.items">{{ story.name }}</li>
         </ul>
     </div>
     <div class="col-sm-4">
         <ul class="list-group">
             <li class="list-group-item list-group-item-success">Creator(s) <span class="badge badge-pill badge-secondary">{{ comic.creators.available }}</span>
-            <li class="list-group-item"><!-- loop over creators -->
-              <span class="badge badge-info"><!-- insert current creator role --></span><!-- insert current creator name -->
+            <li class="list-group-item" *ngFor="let creator of comic.creators.items">
+              <span class="badge badge-info">{{ creator.role }}</span>{{ creator.name }}
             </li>
         </ul>
     </div>

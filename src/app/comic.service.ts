@@ -16,4 +16,9 @@ export class ComicService {
     return this.http.get<MarvelResponse>(`${environment.baseUrl}/v1/public/comics?limit=50&apikey=${environment.apiKey}`)
       .pipe(map(response => response.data.results));
   }
+
+  getComic(id: number): Observable<Comic> {
+    return this.http.get<MarvelResponse>(`${environment.baseUrl}/v1/public/comics/${id}?limit=50&apikey=${environment.apiKey}`)
+      .pipe(map(response => response.data.results[0]));
+  }
 }

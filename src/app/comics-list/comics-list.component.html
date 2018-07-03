@@ -2,7 +2,8 @@
     <li class="media mt-5" *ngFor="let comic of comics$ | async">
         <img class="mr-3" alt="Comic cover" src="{{ comic.thumbnail.path }}.{{ comic.thumbnail.extension }}">
         <div class="media-body">
-            <h2 class="media-heading">{{ comic.title }}
+            <h2 class="media-heading">
+                <a routerLink="/comics/{{ comic.id }}">{{ comic.title }}</a>
                 <span class="badge badge-danger">#{{ comic.issueNumber }}</span>
                 <span class="badge badge-pill badge-secondary" *ngIf="comic.prices[0].price > 0">${{ comic.prices[0].price }}</span>
             </h2>
