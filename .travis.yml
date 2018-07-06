@@ -1,0 +1,39 @@
+language: ruby
+rvm:
+  - jruby
+
+git:
+  depth: false
+
+cache:
+  - bundler
+  - directories:
+    - /home/travis/.rvm/
+
+before_install: mkdir -p output/cours
+
+install:
+  - sudo apt-get update
+  - sudo apt-get -y install graphviz
+  - bundle config --local github.https true
+  - bundle --path=.bundle/gems --binstubs=.bundle/.bin
+  - cp common/stylesheets/asciidoctor.css output/asciidoctor.css
+  - cp common/course.css output/cours/style.css
+  - cp -R common/highlight .
+
+script:
+  - bundle exec asciidoctor -D output index.adoc -a linkcss -a stylesheet=asciidoctor.css
+  - bundle exec asciidoctor -D output/tp -r asciidoctor-diagram tp/index.adoc -a linkcss -a stylesheet=../asciidoctor.css
+  - bundle exec asciidoctor-revealjs -D output/cours -a revealjs_history=true -a revealjs_theme=white -a revealjs_slideNumber=true -a linkcss -a customcss=style.css -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0 cours/index.adoc
+
+after_success:
+  - cd output
+  - cp -R ../highlight .
+  - cp -R ../tp/images tp
+  - cp -R ../cours/images cours
+  - git init
+  - git config user.name "${GH_USER_NAME}"
+  - git config user.email "{GH_USER_EMAIL}"
+  - git add .
+  - git commit -m "Deploy to GitHub Pages"
+  - git push --force --quiet "https://${GITHUB_API_TOKEN}@${GH_REF}" master:gh-pages > /dev/null 2>&1
