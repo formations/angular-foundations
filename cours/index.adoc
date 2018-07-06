@@ -1,0 +1,1108 @@
+= Cours Angular
+Nicolas Frankel
+:doctype: article
+:encoding: utf-8
+:lang: fr
+:imagesdir: images
+:icons: font
+:source-highlighter: highlightjs
+:highlightjs-theme: ../highlight/styles/github.min.css
+
+// bundle exec asciidoctor-revealjs -a revealjs_history=true -a revealjs_theme=white -a revealjs_slideNumber=true -a linkcss -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0 cours/*.adoc
+
+== Historique HTML
+
+* Statique
+* Dynamique et généré côté serveur
+** p.e. PHP
+* Ajout de logique côté client
+** JavaScript
+
+=== Architecture actuelle
+* Données générées côté serveur
+* Mise à disposition via REST/JSON
+* Logique côté client
+** JavaScript
+
+=== Frameworks et librairies Javascript
+
+* https://jquery.com/[jQuery^]
+* https://mootools.net/[MooTools^]
+* https://dojotoolkit.org/[Dojo Toolkit^]
+* https://www.emberjs.com/[Ember^]
+* https://vuejs.org/[Vue.js^]
+* https://reactjs.org/[React^]
+* etc.
+
+=== Tendances
+
+[.stretch]
+image::google-trends.png[]
+
+// https://trends.google.fr/trends/explore?q=angular,vue.js,react,jquery,ember.js
+
+== Angular
+
+* Conçu comme projet 20% chez Google
+* Par Miško Hevery
+
+=== AngularJS, 2, 4, 5 ou 6 ?
+
+* AngularJS:
+** Beaucoup de projets en maintenance
+* Angular 2, 4, 5, 6
+** Basés sur TypeScript
+** Basés sur les composants
+
+=== Concepts Angular
+
+_Component_ ::
+Ensemble constitué d'une vue, de données et de la logique associée.
+Toute application a au moins un composant racine
+Service ::
+Fournit des fonctionnalités qui ne sont pas liées aux vues.
+Utilisé par des composants, via l'injection
+
+=== !
+
+Module ::
+Collection de code lié fonctionnellement.
+Toute application a au moins un module racine
+
+=== Architecture générale
+
+[.stretch]
+image::https://angular.io/generated/images/guide/architecture/overview2.png[]
+
+== _Component_
+
+Contrôle un bout d'écran appelée vue
+
+=== Génération de composant
+
+[source,bash]
+----
+ng generate component <name>
+----
+
+=== Fichiers générés
+
+[options="header,autowidth"]
+|===
+
+| Fichier | Description
+
+| `foo.component.html`
+| Fragment HTML
+
+| `foo.component.css`
+| Feuille de style
+
+| `foo.component.ts`
+| Classe associée
+
+
+| `foo.component.spec.ts`
+| Test de la classe
+
+|===
+
+=== Classe de composant
+
+Classe annotée avec le décorateur `@Component`
+
+=== Exemple
+
+[source,typescript]
+.foo/foo.component.ts
+----
+@Component({
+  selector:    'app-foo',             <1>
+  templateUrl: './foo.component.html' <2>
+})
+export class FooComponent {
+    /* ... */
+}
+----
+
+<1> Identifie la balise pour inclure le fragment
+<2> Référence le fichier de fragment HTML
+
+=== Fragment HTML
+
+* Appelé _template_ dans la documentation
+* Permet l'utilisation d'une syntaxe spécifique
+
+=== Exemple
+
+[source,html]
+.foo/foo.component.html
+----
+<p>Please select an item</p>
+<ul>
+  <li *ngFor="let foo of foos" (click)="select(foo)">
+    {{foo.bar}}
+  </li>
+</ul>
+----
+
+=== Fragment intégré
+
+Attribut `template` au lieu de `templateUrl`
+
+=== Exemple
+
+[source,typescript]
+.foo/foo.component.ts
+----
+@Component({
+  selector: 'app-foo',
+  template: '<p>Hello {{ bar }}</p>' <1>
+})
+export class FooComponent {
+    bar: string;
+}
+----
+
+<1> Fragment intégré
+
+=== _Data binding_
+
+[.stretch]
+image::https://angular.io/generated/images/guide/architecture/databinding.png[]
+
+== Interpolation
+
+* Référencée par des accolades doubles `{{ }}`
+* Affiche l'attribut référencé
+
+=== Exemple d'interpolation
+
+[source,typescript]
+.foo/foo.component.ts
+----
+@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  bar: string = "world"
+}
+----
+
+[source,html]
+.foo/foo.component.html
+----
+Hello {{ bar }}!
+----
+
+=== Un autre exemple
+
+[source,typescript]
+.foo.ts
+----
+export class Foo {
+  bar: string = "world"
+}
+----
+
+[source,typescript]
+.foo/foo.component.ts
+----
+@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  foo: Foo = new Foo();
+}
+----
+
+[source,html]
+.foo/foo.component.html
+----
+Hello {{ foo.bar }}!
+----
+
+== Directives
+
+Classe permettant d'ajouter du comportement aux éléments du DOM
+
+=== Types de directives
+
+Composants ::
+Directive structurelle ::
+* Change la mise en page en ajoutant, supprimant ou modifiant des éléments du DOM.
+* Préfixé par `*`
+Directives d'attribut ::
+Change le comportement ou l'apparence d'une balise existante
+
+=== Directives tierces et propriétaires
+
+* Il est possible d'importer des directives de projets tiers
+* Ou de créer les siennes propres
+
+== Directive `ngForOf`
+
+Instancie un fragment une fois par élément contenu dans une collection
+
+=== Exemple de `ngForOf`
+
+[source,typescript]
+.foo.ts
+----
+export class Foo {
+  bar: string = "world"
+}
+----
+
+[source,typescript]
+.foo/foo.component.ts
+----
+@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  foos: Foo[];
+}
+----
+
+=== !
+
+[source,html]
+.foo/foo.component.html
+----
+<table>
+  <tbody>
+    <tr *ngFor="let foo of foos">
+      <td>{{ foo.bar }}</td>
+    </tr>
+  </tbody>
+</table>
+----
+
+=== Variables locales
+
+[options="header,autowidth"]
+|===
+
+| Nom | Type | Description
+
+| `index`
+| `number`
+| Index de l'élément
+
+| `first`
+| `boolean`
+| `true` lorsque l'élément est le premier élément de l'itération
+
+| `last`
+| `boolean`
+| `true` lorsque l'élément est le dernier élément
+
+|===
+
+=== !
+
+[options="header,autowidth"]
+|===
+
+| Nom | Type | Description
+
+| `even`
+| `boolean`
+| `true` lorsque l'index de l'élément est pair
+
+| `odd`
+| `boolean`
+| `true` lorsque l'index de l'élément est impair
+
+|===
+
+=== Utilisation de variable locale
+
+[source,html]
+----
+<table>
+  <tbody>
+    <tr *ngFor="let foo of foos; index as i">
+      <td>{{ i }}</td>
+      <td>{{ foo.bar }}</td>
+    </tr>
+  </tbody>
+</table>
+----
+
+== Directive `ngIf`
+
+Inclut un fragment basé sur l'évaluation d'une expression
+
+=== Exemple de `ngIf`
+
+[source,typescript]
+.foo/foo.component.ts
+----
+@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  bar: boolean;
+}
+----
+
+[source,html]
+.foo/foo.component.html
+----
+<span *ngIf="bar">Hello world!</span>
+----
+
+=== Exemple avec _else_
+
+[source,html]
+.foo/foo.component.html
+----
+<span *ngIf="condition; else elseBlock">Hello world!</span>
+<ng-template #elseBlock>
+  <span>Bye world!</span>
+</ng-template>
+----
+
+== Directive `ngClass`
+
+Ajoute des classes CSS à une balise basé sur l'évaluation d'une expression
+
+=== Exemple de `ngClass`
+
+[source,typescript]
+.foo/foo.component.ts
+----
+@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  bar: boolean;
+  isBaz(): boolean {
+    // ...
+  }
+}
+----
+
+[source,html]
+.foo/foo.component.html
+----
+<div [class.baz]="isBaz()">
+  Hello world!
+</div>
+----
+
+== Directive `ngStyle`
+
+Ajoute un style CSS à une balise basé sur l'évaluation d'une expression
+
+=== Exemple de `ngStyle`
+
+[source,typescript]
+.foo/foo.component.ts
+----
+@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  bar: boolean;
+  isBaz(): boolean {
+    // ...
+  }
+}
+----
+
+[source,html]
+.foo/foo.component.html
+----
+<div [style.text-decoration ? "underline" : "none"]="bar">
+  Hello world!
+</div>
+----
+
+== Génération de directive
+
+[source,bash]
+----
+ng generate directive <name>
+----
+
+=== Structure d'une directive
+
+[source,typescript]
+.foo.pipe.ts
+----
+@Directive({                 <1>
+  selector: '[appFoo]'       <2>
+})
+export class FooDirective {
+}
+----
+
+<1> Directive indiqué par le décorateur `@Directive`
+<2> Nom de la directive dans le fragment
+
+== _Event binding_
+
+Appelle une fonction lorsqu'un élément déclenche un évènement
+
+=== Exemple d' _event binding_
+
+[source,typescript]
+.foo/foo.component.ts
+----
+@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  click() { console.log("Clicked"); }
+  focus() { console.log("Focused"); }
+}
+----
+
+[source,html]
+.foo/foo.component.html
+----
+<button (click)="click()">Click me!</button>
+<input (focus)="focus()" />
+----
+
+== _Pipes_
+
+* Fonction (simple) qui prend un paramètre en entrée et renvoie une valeur de retour
+* Appliqué via l'opérateur _pipe_ : `|`
+
+=== _Pipes_ existants
+
+* _Pipes_ de transformation de nombres
+* _Pipes_ de transformation de chaînes de caractères
+* _Pipes_ d'internationalisation
+* _Pipes_ divers
+
+=== Transformation de nombres
+
+[options="header,autowidth"]
+|===
+
+| _Pipe_ | Description
+
+| `percent`
+| Transforme le nombre en pourcentage
+
+| `decimal`
+| Transforme le nombre en nombre décimal
+
+| `currency`
+| Transforme le nombre en devise
+
+|===
+
+=== Transformation de chaînes de caractères
+
+[options="header,autowidth"]
+|===
+
+| _Pipe_ | Description
+
+| `lowerCase`
+| Convertit la chaîne en minuscules
+
+| `upperCase`
+| Convertit la chaîne en majuscules
+
+| `titleCase`
+| Convertit la chaîne en minuscules, avec la première lettre de chaque mot en majuscules
+
+|===
+
+=== Internationalisation
+
+* Nécessite un paramètre supplémentaire de type tableau associatif
+* Retourne la valeur qui correspond à la clé d'entrée
+
+[options="header,autowidth"]
+|===
+
+| _Pipe_ | Entrée
+
+| `i18nSelect`
+| `string`
+
+| `i18nPlural`
+| `number`
+
+|===
+
+=== Divers
+
+[options="header,autowidth"]
+|===
+
+| _Pipe_ | Description
+
+| `async`
+| Transforme un `Observable` en sa valeur observée
+
+| `date`
+| Transforme une `Date` en chaîne formatée
+
+| `slice`
+| Transforme un tableau en sous-tableau
+
+| `json`
+| Transforme une structure JSON en chaîne
+
+|===
+
+=== Exemple
+
+[source,typescript]
+.foo/foo.component.ts
+----
+export class FooComponent {
+  today: Date = new Date();
+}
+----
+
+[source,html]
+.foo/foo.component.html
+----
+<p>Today is {{ today | date: 'dd/MM/yyyy' }}</p>
+----
+
+=== Génération de _pipe_
+
+[source,bash]
+----
+ng generate pipe <name>
+----
+
+=== Structure d'un _pipe_
+
+[source,typescript]
+.foo.pipe.ts
+----
+@Pipe({                                         <1>
+  name: 'foo'                                   <2>
+})
+export class FooPipe implements PipeTransform { <3>
+
+  transform(value: any, args?: any): any {      <4><5>
+    return null;
+  }
+}
+----
+
+<1> _Pipe_ indiqué par le décorateur `@Pipe`
+<2> Nom du _pipe_ dans le fragment
+<3> Implémentation de `PipeTransform` optionelle mais conseillée (comme pour toutes les interfaces)
+<4> `value` est l'objet en entrée
+<5> `args` est un (des) objet(s) supplémentaires optionnels
+
+== Services
+
+Classe manipulant des données concentré sur une fonctionnalité précise
+
+=== Services disponibles
+
+Enormément de services disponibles, dans différents modules
+
+=== Génération de service
+
+[source,bash]
+----
+ng generate service <name>
+----
+
+=== Structure de service
+
+[source,typescript]
+.foo.service.ts
+----
+@Injectable({              <1>
+  providedIn: 'root'       <2>
+})
+export class FooService { }
+----
+
+<1> `@Injectable` n'indique pas un service, mais un élément injectable
+<2> Périmètre de l'injection.
+`root` indique que la classe est disponible dans toute l'application
+
+=== Principe d'injection
+
+* Pas d'instanciation "manuelle" (mot-clé `new`)
+* Le _framework_ instancie les objets nécessaires
+* Et les injecte dans les objets qui en ont besoin au démarrage de l'application
+* Par défaut, il y a une *unique* instance de l'objet instancié
+
+=== Exemple
+
+[source,typescript]
+.foo.service.ts
+----
+@Injectable {
+  providedIn: 'root'
+}
+export class FooService { }
+----
+
+[source,typescript]
+.bar.service.ts
+----
+@Injectable {
+  providedIn: 'root'
+}
+export class BarService {
+
+    constructor(private foo: FooService) { }
+}
+----
+
+== Cycle de vie
+
+. `changes`
+. `init`
+. `docCheck`
+. `afterContentInit`
+. `afterContentChecked`
+. `afterViewInit`
+. `afterViewChecked`
+. `destroy`
+
+=== `ngOnInit()`
+
+. Pour l'initialisation après l'instanciation
+** Par exemple, récupérer de la donnée
+. Pour la configuration du composant après l'injection
+
+=== Exemple de `ngOnInit()`
+
+[source,typescript]
+.foo.service.ts
+----
+@Injectable { providedIn: 'root' }
+export class FooService {
+    getFoo(): string { /* ... */ }
+}
+----
+
+[source,typescript]
+.foo/foo.component.ts
+----
+@Component({
+  selector: 'app-foo',
+  template: '<p>{{ foo }}</p>'
+})
+export class FooComponent implements OnInit {
+    foo: string;
+    constructor(private service: FooService) { }
+    onInit() {
+        this.foo = this.service.getFoo();
+    }
+}
+----
+
+=== `ngOnDestroy()`
+
+Pour la libération de ressources
+
+=== Exemple de `ngOnDestroy()`
+
+[source,typescript]
+.bar/bar.component.ts
+----
+@Component({
+  selector: 'app-bar',
+  template: '<p>{{ bar | async }}</p>'
+})
+export class BarComponent implements OnInit, OnDestroy {
+    bar: string;
+    constructor(private service: BarService) { }
+    onInit() {
+        this.service.getBar()
+                    .subscribe(bar => this.bar = bar);
+    }
+    onDestroy() {
+        this.service.getBar()
+                    .unsubscribe();
+    }
+}
+----
+
+== Modules
+
+Unité d'organisation qui délivre un ensemble cohérent de fonctionnalités techniques ou métier
+
+=== Modules disponibles
+
+* Module commun
+* Module de routage
+* Module client HTTP
+* Module de formulaire
+* etc.
+
+=== Génération de module
+
+[source,bash]
+----
+ng generate module <name>
+----
+
+=== Structure de module
+
+[source,typescript]
+----
+@NgModule({                  <1>
+  imports: [                 <2>
+    CommonModule
+  ],
+  declarations: []
+})
+export class FooModule { }
+----
+
+<1> `@NgModule` indique un module
+<2> Tableau des modules dépendants
+
+=== Modularisation
+
+* Tout composant, directive, service, etc. généré doit être lié à un module
+* Par défaut, lié à l'unique module de l'application
+* S'il y a plus d'un module, il faut indiquer à quel module le nouveau code est lié :
++
+[source,bash]
+----
+ng generate service foo --module=app
+----
+
+=== Module commun
+
+Inclut toutes les directives courantes `ngIf`, `ngFor`, etc.
+
+== Module de routage
+
+Permet de naviguer dans des vues différentes
+
+=== Route
+
+Paire chemin - composant
+
+[source,json]
+----
+{
+  path     : 'foo',
+  component: FooComponent
+}
+----
+
+=== Configuration du routeur
+
+Via `RouterModule.forRoot()`
+
+[source,typescript]
+.routing.module.ts
+----
+const routes: Routes = [
+  { path: ''   , component: HomeComponent },
+  { path: 'foo', component: FooComponent },
+  { path: 'bar', component: BarComponent }
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes)
+  ]
+})
+export class AppModule { }
+----
+
+=== Utilisation dans le fragment
+
+Via l'attribut `routerLink`
+
+[source,html]
+----
+<ul>
+    <li><a routerLink="foo">Foo</a></li> <1>
+    <li><a routerLink="bar">Bar</a></li>
+</ul>
+----
+
+<1> Pas de `/` en début de chaîne
+
+[source,html]
+----
+<p>
+    <router-outlet></router-outlet> <1>
+</p>
+----
+
+<1> La balise sera remplacée par le composant configuré dans la route
+
+=== Caractères joker
+
+`**` joue le rôle de _catch all_
+
+[source,typescript]
+----
+const routes: Routes = [
+  { path: 'foo', component: FooComponent },
+  { path: 'bar', component: BarComponent },
+  { path: '**' , component: NotFoundComponent }
+];
+----
+
+WARNING: Les routes sont ordonnées !
+
+=== Chemin paramétré
+
+[source,typescript]
+.routing.module.ts
+----
+const routes: Routes = [
+  { path: 'person/:id', component: PersonDetailComponent }
+];
+----
+
+[source,html]
+.person/person-detail.component.html
+----
+<a routerLink="person/{{ index }}">Person</a>
+----
+
+[source,html]
+.person/person-detail.component.ts
+----
+export class PersonDetailComponent {
+
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    let id = +this.route.snapshot.paramMap.get('id');
+  }
+}
+----
+
+=== Propriétés supplémentaires
+
+[source,typescript]
+----
+const routes: Routes = [
+  {
+    path: 'foo',
+    component: XComponent,
+    data: { title: 'Foo' } <1>
+  },{
+    path: 'bar',
+    component: XComponent,
+    data: { title: 'Bar' } <1>
+  }
+];
+----
+
+<1> Récupéré via `route.snapshot.data.title`
+
+== Intégration RxJS
+
+Angular intègre nativement le _framework_ https://rxjs-dev.firebaseapp.com/[RxJS^]
+
+[quote,https://rxjs-dev.firebaseapp.com/]
+RxJS is a library for reactive programming using Observables, to make it easier to compose asynchronous or callback-based code.
+
+=== Bloquant et non-bloquant
+
+Bloquant::
+L'exécution de code JavaScript doit attendre jusqu'à ce qu'une opération tierce se termine.
+On parle de code synchrone.
+Non-bloquant::
+Au contraire, un code non-bloquant (ou asynchrone) n'attend pas la fin d'une telle opération.
+
+=== Exemple de code asynchrone
+
+[source,javascript]
+----
+let html = download('http://www.lolcats.com/')
+// picture is undefined
+
+download('http://www.lolcats.com/', (error, html) => { <1>
+  if (error) {
+    console.error('Download error!', error);
+  } else {
+    console.log('Download finished', html);
+  }
+});
+----
+
+<1> Fonction de _callback_
+
+=== http://callbackhell.com/[Callback hell^]
+
+Lorsque plusieurs appels de fonctions de _callback_  doivent être chaînés
+
+[source,javascript]
+----
+foo('root', (a) => {
+  bar(a, (b) => {
+    baz(b, (c) => {
+      qux(c, (d) => {
+        // Do something with d
+      });
+    });
+  });
+});
+----
+
+=== Alternatives aux _callbacks_
+
+* _Promises_
+* `async` - `await`
+* Reactive _framework_ (RxJS)
+
+=== Patron de conception Observateur
+
+[.stretch]
+image::https://upload.wikimedia.org/wikipedia/commons/8/8d/Observer.svg[]
+
+=== Concepts Rx
+
+`Observable`::
+Représente l'idée d'une collection de valeurs/évènements futurs
+`Observer`::
+Collection de _callbacks_ qui sait comment écouter les valeurs délivrées par l' `Observable`
+
+=== Concepts Rx
+
+`Subscription`::
+Représente l'exécution d'un `Observable`, utile pour annuler l'exécution
+`Subject`::
+Equivalent d'un émetteur d'évènements
+
+=== Diagramme de classes rxjs
+
+[.stretch]
+image::rx-class-diagram.svg[]
+
+=== Exemple de code
+
+[source,javascript]
+----
+const source = range(1, 200); <1>
+
+source.subscribe(i => console.log(i));
+----
+
+<1> Emet la séquence d'évènements 1, 2, 3, ... jusqu'à 199
+
+=== Transformations
+
+* Le résultat d'une opération asynchrone est rarement celui nécessaire
+* Par exemple, sous-structure JSON sur un appel REST
+
+=== Fonction `pipe()`
+
+`Observable.pipe()` permet de transformer un `Observable<X>` en `Observable<Z>` via une série de fonctions de transformation successives
+
+=== Fonctions de transformation
+
+[options="header,autowidth"]
+|===
+
+| Fonction | Description
+
+| `map()`
+| Applique une fonction de transformation à chaque évènement et émet les valeurs de retour sous forme d' `Observable`
+
+| `filter()`
+| Filtre les évènements émis par la source en émettant uniquement ceux qui répondent à un prédicat spécifique
+
+|===
+
+=== Fonctions de transformation
+
+[options="header,autowidth"]
+|===
+
+| Fonction | Description
+
+| `skip()`
+| Retourne un `Observable` qui saute les n premiers éléments émis par l' `Observable` source
+
+| `take()`
+| Retourne un `Observable` qui conserve les n premiers éléments émis par l' `Observable` source
+
+|===
+
+=== Fonctions de transformation
+
+[options="header,autowidth"]
+|===
+
+| Fonction | Description
+
+| `distinct()`
+| Retourne un `Observable` qui émet tous les évènements de la source qui sont distincts
+
+| `tap()`
+| Retourne un `Observable` identique à la source *et* exécute une fonction pour chaque évènement
+
+|===
+
+=== http://rxmarbles.com/[RxJS marbles^]
+
+Diagramme interactif d'Observables Rx
+
+image::rx-marble.png[]
+
+=== Exemple de `pipe()`
+
+[source,typescript]
+----
+class Pair {
+  k: string; v: any;
+  constructor(k: string, v: any) { this.k = k; this.v = v; }
+}
+
+const routes$: Observable<Pair> = from([
+  new Pair('', '<root>'), new Pair('foo', 'Foo'),
+  new Pair('bar', 'Bar'), new Pair('baz', null),
+  new Pair('**', { foo: 'bar' })
+]);
+
+routes$.pipe(
+  filter(pair => pair.v != null),
+  map(pair => pair.k),
+  skip(2))
+----
+
+== Module de client HTTP
+
+API permettant d'effectuer des requêtes HTTP de haut niveau
+
+=== Diagramme de classes HTTP
+
+[.stretch]
+image::http-request-class-diagram.svg[]
+
+=== Exemple d'appel HTTP
+
+[source,typescript]
+----
+class Response {
+  foo: number;
+  bar: string;
+  baz: string[];
+}
+
+http.get<FooResponse>('http://foo.com/').pipe(
+  map(response => response.bar)
+).subscribe(bar => console.log(bar));
+----

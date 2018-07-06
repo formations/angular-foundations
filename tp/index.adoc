@@ -1,0 +1,854 @@
+= Travaux pratiques Angular
+Nicolas Frankel
+:doctype: article
+:encoding: utf-8
+:lang: fr
+:toc: macro
+:sectanchors:
+:numbered:
+:icons: font
+:experimental:
+:imagesdir: images
+:source-highlighter: highlightjs
+:highlightjsdir: ../highlight
+
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
++++<a href="https://github.com/formations/angular-foundations"><img style="position: fixed; top: 0; right: 0; border: 0;" href="_blank" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>+++
+
+include::../common/license.adoc[]
+
+.Objectif
+****
++++<img width="100" style="float:right;" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">+++
+
+Ce document pour but l'apprentissage du _framework_ https://angular.io[Angular^] via la réalisation d'une application de visualisation de _comic books_ (_i.e._ comics).
+
+Le code source associé est disponible à l'URL https://github.com/formations/angular-foundations[suivante^].
+****
+
+toc::[]
+
+== Références
+
+En anglais : ::
+
+* https://angular.io/tutorial/[Tutorial: Tour of Heroes^]
+
+== Mise en place
+
+Les étapes nécessaires pour bien démarrer le travail sont les suivantes.
+
+=== Récupération des sources
+
+Pour disposer des sources, utiliser _git_ :
+
+[source, bash]
+----
+git clone https://github.com/formations/angular-foundations
+----
+
+L'étape de départ est la branche `master`.
+
+=== Outillage
+
+Le _workshop_ est un projet basé sur Angular.
+Pour travailler, les outils suivants sont requises :
+
+https://www.npmjs.com/[npm^]::
+--
+Il faut tout d'abord installer npm.
+Puis, installer les dépendances npm en local :
+
+[source, bash]
+----
+npm install
+----
+--
+https://www.npmjs.com/package/@angular/cli[@angular/cli^]::
+--
+Il est nécessaire d'installer la ligne de commande (CLI) Angular:
+
+[source,bash]
+----
+npm install -g @angular/cli
+----
+--
+
+TIP: Par rapport à AngularJS, Angular fournit tout le reste de l'outillage nécessaire du projet (transpilation TypeScript en JavaScript, tests, etc.).
+
+=== Création du projet
+
+NOTE: Cette étape est à visée informative uniquement et peut être passée.
+En effet, le projet disponible a déjà pris soin de réaliser celle-ci.
+
+// TODO
+
+=== Structure de départ
+
+La structure initiale du projet cloné est la suivante :
+
+image::project-structure.png[Structure initiale du projet,width=230,height=684,align="center"]
+
+Les principaux dossiers/fichiers sont les suivants :
+
+[options="header"]
+|===
+
+| Dossier / fichier | Description
+
+| `e2e`
+| Tests de bout-en-bout
+
+| `node_modules`
+| Modules _node.js_
+
+| `src/app/about`
+| Ecran A propos
+
+| `src/app/comic-detail`
+| Ecran de détail de _comic_
+
+| `src/app/home`
+| Ecran d'accueil
+
+| `src/app/nav-bar`
+| Composant de barre de navigation
+
+| `src/app/tab-bar`
+| Composant de barre d'onglets
+
+| `app.component.css`
+| Feuille de style du composant racine
+
+| `app.component.html`
+| Fragment HTML du composant racine
+
+| `app.component.spec.ts`
+| Tests relatifs au composant racine
+
+| `app.component.ts`
+| Code relatif au composant racine
+
+| `app.module.ts`
+| Module principal de l'application
+
+| `data.ts`
+| Données "bouchon"
+
+| `model.ts`
+| Modèle de classes TypeScript
+
+| `assets`
+| Resources statiques, y compris les images
+
+| `environments`
+| Liste des environnements disponibles.
+Par défaut, _dev_ et _prod_.
+
+|===
+
+== Premiers pas
+
+=== Lancement de l'application
+
+Dans le répertoire racine du projet, lancer l'application :
+
+[source,bash]
+----
+ng serve --open
+----
+
+TIP: L'option `--open` permet d'ouvrir automatiquement une fenêtre de navigateur.
+Si elle n'est pas utilisée, naviguer à <http://localhost:4200/>.
+
+Le résultat qui doit s'afficher est le suivant :
+
+image::initial-state.png[Etat initial de l'application,width=345,height=200,align="center"]
+
+=== Affichage de données
+
+.Objectif
+NOTE: Le but de cette section est d'afficher les attributs du composant racine dans la page.
+
+Voici le code source du composant racine :
+
+[source,typescript]
+.src/app/app.component.ts
+----
+import { Component } from '@angular/core';            <1>
+
+@Component({
+  selector: 'app-root',                               <2>
+  templateUrl: './app.component.html',                <3>
+  styleUrls: ['./app.component.css']                  <4>
+})
+export class AppComponent {                           <5>
+  title = 'app';                                      <6>
+  id = 21464;                                         <6>
+  title = 'Powers (2000)';                            <6>
+  issueNumber = 18;                                   <6>
+  thumbnail = 'image/image_not_available.jpg';        <6>
+  price = 3.45;                                       <6>
+  description = 'Walker and Pilgrim investigate...';  <6>
+ }
+----
+
+<1> TypeScript nécessite l'utilisation d'imports.
+Dans le cas contraire, le type ne peut pas être utilisé.
+<2> Sélecteur HTML qui doit être ajouté dans la page pour afficher le fragment HTML
+<3> Fragment HTML associée au composant.
+C'est le contenu de ce fichier HTML qui sera ajouté à la page web.
+<4> Feuille de style associée au composant
+<5> Le mot-clé `export` est nécessaire pour que le composant soit utilisé
+<6> Attributs disponibles dans le composant HTML
+
+En utilisant la syntaxe `{{ }}`, afficher les attributs dans la page.
+
+[source,html]
+.src/app/app.component.html
+----
+<div class="container">
+  <h1>Comics Library</h1>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="media">
+        <img class="mr-3" alt="Comic cover">                        <1>
+        <div class="media-body">
+          <h2 class="media-heading">                                <2>
+            <span class="badge badge-danger">#                      <3>
+            <span class="badge badge-pill badge-secondary">$</span> <4>
+          </h2>
+          <p></p>                                                   <5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+----
+
+<1> Ajouter l'attribut `src` pour afficher l'image du composant
++
+TIP: Les images se trouvent dans le répertoire `assets`
++
+<2> Afficher l'attribut `title`
+<3> Afficher l'attribut `issueNumber`
+<4> Afficher l'attribut `price`
+<5> Afficher l'attribut `description`
+
+Le résultat attendu est le suivant :
+
+image::simple-data-display.png[Etat initial de l'application,width=772,height=275,align="center"]
+
+=== Gestion de composant
+
+.Objectif
+NOTE: Le but de cette section est de créer un composant personnalisé.
+
+Création de composants : ::
+--
+La création de composants se fait via la ligne de commande.
+Pour créer un composant nommé `comicsList`, utiliser la commande suivante :
+
+[source,bash]
+----
+ng generate component comicsList
+----
+
+Après l'exécution de la commande, un nouveau répertoire `src/app/comics-list` a été généré qui contient les fichiers suivants :
+
+[options="header"]
+|===
+
+| Fichier | Description
+
+| `comics-list.component.css`
+| Feuille de style du composant liste
+
+| `comics-list.component.html`
+| Fragment HTML du composant liste
+
+| `comics-list.component.spec.ts`
+| Tests relatifs au composant liste
+
+| `comics-list.component.ts`
+| Code relatif au composant liste
+
+|===
+--
+Personnalisation : ::
+--
+Par défaut :
+
+* le nom de la classe est `ComicslistComponent` dans le code
+* et le sélecteur `<app-comics-list>`
+
+TIP: Il est conseillé d'utiliser un préfixe quel qu'il soit, afin d'éviter que des balises de bibliothèques différentes aient le même nom.
+Le préfixe par défaut est _app_
+Il est configuré dans le fichier `angular.json`.
+
+--
+Utilisation du composant : ::
+--
+Déplacer le code du composant depuis le composant racine `app.component` vers le nouveau composant créé.
+Puis modifier le composant racine ainsi :
+
+[source,html]
+.src/app/app.component.html
+----
+<div class="container">
+  <h1>Comics Library</h1>
+  <app-comics-list></app-comics-list> <1>
+</div>
+----
+<1> Ajout du sélecteur, qui va afficher le fragment HTML sur la page
+--
+
+L'affichage doit être exactement similaire à l'affichage de l'étape précédente.
+
+=== Utilisation de classe et de données
+
+. Remplacer les différents attributs de la classe `ComicsListComponent` par un unique attribut de type `SimpleComic` :
++
+[source,typescript]
+.src/app/comics-list/comics-list.component.ts
+----
+export class ComicsListComponent {
+
+  comic: SimpleComic = {                               <1>
+    id: 21464,
+    title: 'Powers (2000)',
+    issueNumber: 18,
+    thumbnail: 'image/image_not_available.jpg',
+    price: 3.45,
+    description: 'Walker and Pilgrim investigate...'
+  }
+}
+----
+<1> Remplacement des différent attributs par un unique attribut
++
+La classe `SimpleComic` est déclarée dans le fichier `model.ts`.
+Ne pas oublier de l'importer.
++
+Modifier le composant HTML en conséquence.
++
+. Remplacer la définition de la donnée dans le composant par la constante `COMIC` :
++
+[source,typescript]
+.src/app/comics-list/comics-list.component.ts
+----
+export class ComicsListComponent {
+
+  comic: SimpleComic = COMIC; <1>
+}
+----
+<1> Utilisation de la constante existante
++
+La constante `COMIC` est déclarée dans le fichier `data.ts`.
+Ne pas oublier de l'importer.
+
+Au cours des deux manipulations précédentes, l'affichage doit être similaire à l'étape précédente.
+
+== Directives
+
+=== Affichage de collection d'éléments
+
+.Objectif
+NOTE: Le but de cette section est d'afficher non plus un unique _comic_ mais une collection de ceux-ci.
+
+. Dans la classe `ComicsListComponent` :
+** Modifier l'attribut `comic` de type `SimpleComic` en attribut `comics` de type `Comic[]`
++
+.src/app/comics-list/comics-list.component.ts
+----
+export class ComicsListComponent {
+
+  comic: SimpleComic = COMIC; <1>
+}
+----
+<1> Modifier cette ligne
++
+** Affecter la constante `COMICS` du fichier `data.ts` à ce dernier.
+Ne pas oublier l'import !
+. Modifier le fragment HTML pour boucler sur les éléments de la collection en utilisant la directive https://angular.io/api/common/NgForOf[`ngForOf`^]
++
+.src/app/comics-list/comics-list.component.html
+----
+<ul class="list-unstyled">
+    <li class="media mt-5">                                              <1>
+        <img class="mr-3" alt="Comic cover">                             <2>
+        <div class="media-body">
+            <h2 class="media-heading">                                   <3>
+                <span class="badge badge-danger">#</span>                <4>
+                <span class="badge badge-pill badge-secondary">$</span>  <5>
+            </h2>
+            <p></p>                                                      <6>
+        </div>
+    </li>
+</ul>
+----
+<1> Boucler sur les _comics_ de la collection
+<2> Utiliser l'attribut `src` pour afficher l'image
+<3> Afficher le titre
+<4> Afficher le numéro
+<5> Afficher le prix
+<6> Afficher la description
++
+WARNING: La structure des classes `SimpleComic` et `Comic` est légèrement différente.
+Par exemple, le chemin de l'image n'est plus stocké dans un attribut de type simple `string`, mais dans un type qui comporte deux attributs, `path` et `extension`.
+Adapter le _binding_ pour refléter la nouvelle structure.
+
+Le résultat attendu est le suivant :
+
+image::collection-display.png[Affichage d'une collection d'éléments,width=772,height=792,align="center"]
+
+=== Affichage conditionnel d'éléments
+
+.Objectif
+NOTE: Le but de cette section est d'afficher un élément si une condition est vraie.
+
+Dans l'état actuel, le prix est affiché dans tous les cas.
+Or, il peut s'avérer que le prix ne soit pas renseigné (`price: 0`).
+Dans ce cas, il ne fait pas de sens de l'afficher.
+
+Dans le fragment HTML, utiliser la directive https://angular.io/api/common/NgIf[`ngIf`^] pour afficher le prix uniquement si celui est supérieur strictement à 0.
+
+Le résultat attendu est le suivant :
+
+image::conditional-display.png[Affichage conditionnel du prix,width=772,height=541,align="center"]
+
+=== Classe conditionnelle
+
+.Objectif
+NOTE: Le but de cette section est d'appliquer une classe CSS à un élément si une condition est vraie.
+
+Préparation : ::
+--
+Le composant de barre d'onglets a déjà été créé et est prêt à être utilisé.
+L'ajouter au fragment HTML racine :
+
+[source,html]
+.app.component.html
+----
+<div class="container">
+    <h1>Comics Library</h1>
+    <app-tab-bar></app-tab-bar>         <1>
+    <app-comics-list></app-comics-list>
+</div>
+----
+<1> Ajouter le composant de barre d'onglets
+
+Le résultat attendu est le suivant :
+
+image::start-tab.png[Affichage initial des onglets,width=772,height=592,align="center"]
+--
+Gestion de l'état "sélectionné" : ::
+--
+Modifier la classe `TabBarComponent` ainsi :
+
+. Créer un attribut `selectedIndex` de type `number` initialisé à `0`
+. Créer une fonction `isSelected(index: number): boolean` qui retourne :
+** `true` si `index` est égal à `selectedIndex`
+** `false` sinon
+--
+Mise en exergue de l'onglet sélectionné : ::
+--
+Utiliser la directive https://angular.io/api/common/NgClass[`ngClass`^] pour faire en sorte que la classe CSS `active` soit affecté à l'onglet si et seulement s'il est sélectionné.
+
+Le résultat attendu est le suivant :
+
+image::highlight-tab.png[Highlight de l'onglet sélectionné,width=772,height=592,align="center"]
+--
+
+== _Event Binding_
+
+.Objectif
+NOTE: Le but de cette section est d'associer l'appel d'une fonction au clic sur un élément.
+
+. Dans la classe `TabBarComponent`, créer une fonction `select(index: number)` qui modifie l'attribut `selectedIndex` avec l'index passé en paramètre
+. Modifier le fragment HTML pour qu'un clic sur l'onglet appelle la méthode précédente
+
+Le résultat attendu est le suivant :
+
+image::select-tab.png[Sélection de l'onglet,width=772,height=592,align="center"]
+
+== Communication inter-composants
+
+.Objectif
+NOTE: Le but de cette section est d'envoyer des informations depuis le composant onglet vers le composant liste.
+
+A cette étape, le composant onglet connaît l'onglet sélectionné, et doit en faire part au composant liste lorsqu'il change.
+Plusieurs méthodes sont disponibles pour l'interaction de 2 composants.
+Comme l'onglet et la liste n'ont pas de relation parent-enfant, un service intermédiaire est requis.
+
+Voici le diagramme qui va être implémenté :
+
+[plantuml,service-communication-sequence-diagram,svg,align="center"]
+....
+participant "<u>ng:Angular</u>" as ng
+actor "<u>u:User</u>" as user
+participant "<u>t:ComicsListComponent</u>" as list
+participant "<u>t:TabBarComponent</u>" as tabbar
+participant "<u>s:TabService</u>" as service
+participant "<u>:Subject</u>" as subject
+activate ng
+activate subject
+ng -> list: ngInit()
+activate list
+list -> subject: subscribe(callback)
+ng <-- list
+deactivate list
+====
+activate user
+user -> tabbar: select(index)
+activate tabbar
+tabbar -> service: changeTitle(title)
+activate service
+service -> subject: next(title)
+note right
+	callback function
+        subscribed above
+	will be called now
+end note
+tabbar <-- service
+deactivate service
+user <-- tabbar
+deactivate tabbar
+hide footbox
+....
+
+=== Génération du service
+
+A l'instar des composants, les services sont créés à l'aide de la ligne de commande.
+
+Créer un service `tab` :
+
+[source,bash]
+----
+ng generate service tab
+----
+
+Après l'exécution de la commande, les fichiers suivants ont été créés :
+
+[options="header"]
+|===
+
+| Fichier | Description
+
+| `tab.service.ts`
+| Tests relatifs au service
+
+| `tab.service.ts`
+| Code du service
+
+|===
+
+En tant qu'intermédiaire, le service doit permettre de publier et de souscrire à des évènements.
+Angular intègre nativement le framework https://rxjs-dev.firebaseapp.com/[RxJs^].
+
+WARNING: Il est toujours nécessaire d'utiliser `import` pour utiliser les objets d'un autre espace de nommage.
+
+Le service doit adopter la conception suivante :
+[plantuml,tab-service-class-diagram,svg,width=600,height=225,align="center"]
+....
+class TabService {
+ - titleChangedSource: rxjs.Subject<string>
+ + titleChanged$: rxjs.Observable<String>
+ + changeTitle(title: string)
+}
+....
+
+* l'attribut `titleChangedSource` est un nouvel objet de type `Subject<string>`
+* l'attribut `titleChanged$` est le même objet que l'objet précédent, mais trans-typé en `Observable<String>`
++
+TIP: Par convention, les attributs de type `Observable` sont suffixés par `$`.
+
+* la fonction `changeTitle(title: string)` appelle la fonction `next()` de `titleChangedSource` avec comme paramètre `title`
+
+=== Injection du service
+
+Avec Angular, les services ne sont pas instanciés manuellement mais par le framework (comme les composants).
+Il est donc nécessaire d'injecter l'instance existante dans les composants.
+
+Pour ce faire, modifier le constructeur des composants `TabComponent` et `ComicsListComponent` en passant le type demandé :
+
+[source,typescript]
+----
+export class XComponent {
+
+  constructor(tabService: TabService) { }
+}
+----
+
+=== Enregistrement du _callback_
+
+Le composant `ComicsListComponent` joue le rôle d' _Observer_:
+il doit enregistrer à l'initialisation une fonction de _callback_ qui sera appelée à chaque fois que le titre sera modifié.
+L'initialisation se fait via l'implémentation de l'interface `OnInit`, et sa fonction associée `ngOnInit()`.
+
+Pour s'abonner aux changements, utiliser la fonction `subscribe()` avec comme paramètre une fonction de _callback_ dont l'algorithme est le suivant :
+
+* _SI_ le paramètre est `null`
+** _ALORS_ retourner la liste complète
+* _SINON_
+** retourner uniquement la liste de comics dont le titre contient le paramètre
+
+TIP: Consulter la documentation de la méthode https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/filter[`filter()`^]
+
+=== Publication d'éléments
+
+Modifier l'implémentation de la fonction `TabComponent.select()` pour qu'elle appelle la fonction `TabService.changeTitle(title: string)` avec le paramètre correct.
+
+Le résultat attendu est le suivant :
+
+image::filter-tab.png[Filtrage de la collection en fonction de l'onglet,width=772,height=592,align="center"]
+
+== _Pipes_
+
+.Objectif
+NOTE: Le but de cette section est d'implémenter un https://angular.io/guide/pipes[_pipe_^] Angular.
+
+Jusqu'à présent, les _comics_ ne sont pas ordonnés.
+Il serait souhaitable qu'ils le soient, d'abord par titre, puis par numéro dans le titre.
+
+Une solution pour aboutir à cela est d'appeler la fonction `sort()` (avec comme paramètre un comparateur) à chaque fois que l'on retourne la collection de _comics_.
+
+[TIP]
+.Fonction comparateur
+====
+La fonction comparateur passée en argument de la fonction `sort()` accepte deux arguments - les éléments à comparer et retourne :
+
+* un entier positif si le premier élément est "supérieur" au second
+* un entier négatif s'il est "inférieur"
+* 0 si les deux éléments sont égaux
+
+A titre d'exemple, voici le code source de la fonction comparateur qui compare deux _comics_, d'abord en fonction de leur attribut _title_, puis de leur attribut _issueNumber_ en cas d'égalité.
+
+[source,typescript]
+----
+private byTitle = (comic1, comic2) => {
+  let byTitle = comic1.title.localeCompare(comic2.title);
+  if (byTitle == 0) {
+    return comic1.issueNumber - comic2.issueNumber;
+  }
+  return byTitle;
+}
+----
+====
+
+Le problème d'appeler la fonction `sort()` explicitement est qu'il est possible d'oublier un tel appel.
+La solution proposée par Angular est de configurer le filtre sur le fragment HTML via un _pipe_.
+
+=== Création de _pipe_
+
+Comme précédemment, la création de _pipe_ se fait via la ligne de commande.
+
+Pour créer un _pipe_ nommé `sortByTitle`, utiliser la commande suivante :
+
+[source,bash]
+----
+ng generate pipe sortByTitle
+----
+
+Le résultat est le suivant :
+
+[source,typescript]
+.src/app/sort-by-title.pipe.ts
+----
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({                                                  <1>
+  name: 'sortByTitle'                                    <2>
+})
+export class SortByTitlePipe implements PipeTransform {  <3>
+
+  transform(value: any, args?: any): any {               <4>
+    return null;
+  }
+}
+----
+
+<1> Identifie la classe comme un _pipe_
+<2> Nom du _pipe_ à utiliser dans le fragment HTML
+<3> L'interface est optionelle, mais conseillée
+<4> La fonction `transform()` est essentielle au _pipe_.
+Le paramètre `value` représente l'entrée, et la valeur retournée par la fonction la sortie.
+Le paramètre `args?` permet d'ajouter des paramètres au _pipe_.
+
+Adapter la signature de la fonction pour trier la collection de comics comme ci-dessus.
+Puis, réutiliser la méthode `byTitle()` à bon escient.
+
+=== Utilisation de _pipe_
+
+L'utilisation de _pipe_ dans le fragment HTML se fait via l'utilisation du symbole `|` puis le nom du _pipe_.
+
+[source,html]
+.src/app/comicslist.component.html
+----
+<li class="media mt-5" *ngFor="let comic of comics | sortByTitle">
+----
+
+Le résultat attendu est le suivant :
+
+image::sort-tab.png[Tri de la collection,width=772,height=592,align="center"]
+
+== Routage
+
+.Objectif
+NOTE: Le but de cette section est d'associer des éléments cliquables à des composants, de telle sorte qu'un clic sur un tel élément affiche le composant associé.
+
+=== Création de module
+
+En plus des composants et des services, les modules sont créés à la ligne de commande.
+Créer un module `routing` :
+
+[source,bash]
+----
+ng generate module routing  --flat --module=app
+----
+
+[NOTE]
+.Signification des options
+====
+`--flat` : ::
+Crée le nouveau module à la racine du répertoire `app` plutôt que dans un sous-module
+`--module` : ::
+Importe le nouveau module dans le module principal de l'application
+====
+
+L'exécution de la commande crée les fichiers suivants :
+
+[options="header"]
+|===
+
+| Fichier | Description
+
+| `routing.module.specs.ts`
+| Tests relatifs au module
+
+| `routing.module.ts`
+| Code du module
+
+|===
+
+WARNING: Dès lors que l'application comporte plus d'un module, la génération d'un nouveau fichier via `ng generate` nécessite d'indiquer le module auquel celui-ci sera rattaché
+
+=== Implémentation des routes
+
+Implémenter les routes suivantes :
+
+[options="header"]
+|===
+
+| Chemin | Composant
+
+|
+| `HomeComponent`
+
+| `comics`
+| `ComicsListComponent`
+
+| `about`
+| `AboutComponent`
+
+|===
+
+NOTE: Les composants `HomeComponent` et `AboutComponent` sont respectivement disponibles dans les répertoires `home` et `about`
+
+Utiliser les routes définies précédemment dans le fragment `src/app/nav-bar/nav-bar.component.html` à l'aide de la directive https://angular.io/api/router/RouterLink[`routerLink`^].
+
+=== Affichage des fragments
+
+Au niveau de l'affichage du composant `app.component.html` :
+
+. Supprimer la balise `<h1>`
+. Ajouter le fragment `<app-nav-bar>` à la racine
+. Déplacer le fragment `<app-tab-bar>` au niveau du composant `comics-list.component.html`
+. Remplacer le fragment `<app-comics-list>` par le fragment dédié au routage
+
+Le résultat attendu est le suivant :
+
+image::navigation-bar.png[Utilisation de la barre de navigation,width=1003,height=424,align="center"]
+
+== Module Client HTTP
+
+.Objectif
+NOTE: Le but de cette section est d'utiliser le module client HTTP pour récupérer les données d'un serveur en lieu et place des donnée statiques.
+
+=== _Refactoring_
+
+Nettoyage du code : ::
+--
+D'un point de vue conceptuel, un composant ne doit pas gérer lui-même de données, mais utiliser un service pour cela.
+
+. Créer un service `comic`
++
+[source, bash]
+----
+ng generate service comic
+----
++
+. Dans le nouveau service `ComicService`, créer une fonction `getComics()` qui retourne la constante `COMICS`
+. Dans le composant `ComicsListComponent`, remplacer l'utilisation de cette dernière par le service
+--
+Changement de type : ::
+--
+Le module client HTTP utilise des types de retour asynchrones - `Observable`.
+Il est nécessaire d'adapter la chaîne de traitement dès à présent.
+
+. Dans la classe `ComicService`, remplacer le type de retour de la fonction `getComics()` de `Comics[]` à `Observable<Comic[]>`
++
+TIP: Utiliser la fonction https://rxjs-dev.firebaseapp.com/api/index/of[`of`^]
++
+. Adapter la classe `ComicListComponent` :
+** Modifier le type de l'attribut `comics` en `Observable<Comic[]>`
+** Modifier son nom en `comics$`
+** Adapter l'implémentation de la fonction `ngInit()`
+. Pour disposer d'un tableau dans le fragment HTML, utiliser le https://angular.io/api/common/AsyncPipe[_pipe_ `async`^]
+--
+
+=== Création et configuration de compte
+
+1. La première étape consiste à créer un compte développeur sur https://www.marvel.com/signin?referer=https%3A%2F%2Fdeveloper.marvel.com%2F[developer.marvel.com^].
+2. Puis, récupérer la https://developer.marvel.com/account[clé d'API publique^].
+3. Ne pas oublier de mettre à jour la liste des site habilités avec `localhost`.
+
+image::marvel-account.png[Marvel Comics developer account,width=493,height=615,align="center"]
+
+=== Utilisation du module
+
+. Dans la classe `AppModule`, importer le module `HttpClientModule` depuis `@angular/common/http`
+. Abandonner la notion d'onglets.
+Dans le fragment `comics-list.component.html`, supprimer `<app-tab-bar>`
+. Abandonner le filtre.
+Supprimer également l'utilisation du _pipe_ `sortByTitle` (mais pas celle du _pipe_ `async` !)
+. Dans le fichier `environment.ts`, créer deux entrées supplémentaires :
++
+[options="header"]
+|===
+
+| Clé | Valeur
+
+| `baseUrl`
+| "https://gateway.marvel.com:443"
+
+| `apiKey`
+| Clé d'API disponible sur https://developer.marvel.com/account[marvel.com^]
+
+|===
++
+. Dans le service `ComicService`, injecter le service `HttpClient`.
+Utiliser ce dernier en conjonction avec les paramètres d'environnement pour exécuter https://developer.marvel.com/docs#!/public/getComicsCollection_get_6[la requête qui retourne la liste des comics^].
+. Dans le composant `ComicsListComponent`, injecter le service `ComicService` et supprimer l'injection du `TabService`
+
+Le résultat attendu doit être semblable à la copie d'écran suivante :
+
+image::marvel-comics-list.png[Affichage de la liste des comics depuis le serveur,width=402,height=796,align="center"]
+
+Une fois la liste affichée, modifier le code pour qu'un clic sur un comics affiche son détail.
+
+TIP: Utiliser le composant `comic-detail.component` et <<../cours/index.adoc#chemin_paramtr,les routes avec paramètres>>
+
+Voici un exemple de résultat attendu :
+
+image::marvel-comic-detail.png[Affichage d'un comic depuis le serveur,width=602,height=623,align="center"]
