@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.7.1">
+<meta name="author" content="Nicolas Frankel">
+<title>Travaux pratiques Angular</title>
+<link rel="stylesheet" href="./../asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Travaux pratiques Angular</h1>
+<div class="details">
+<span id="author" class="author">Nicolas Frankel</span><br>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://github.com/formations/angular-foundations"><img style="position: fixed; top: 0; right: 0; border: 0;" href="_blank" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a></p>
+</div>
+<div class="paragraph">
+<p><span class="image left"><a class="image" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Licence Creative Commons"></a></span></p>
+</div>
+<div class="paragraph">
+<p>Ce document est mis à disposition selon les termes de la <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Objectif</div>
+<div class="paragraph">
+<p><img width="100" style="float:right;" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="></p>
+</div>
+<div class="paragraph">
+<p>Ce document pour but l&#8217;apprentissage du <em>framework</em> <a href="https://angular.io" target="_blank" rel="noopener">Angular</a> via la réalisation d&#8217;une application de visualisation de <em>comic books</em> (<em>i.e.</em> comics).</p>
+</div>
+<div class="paragraph">
+<p>Le code source associé est disponible à l&#8217;URL <a href="https://github.com/formations/angular-foundations" target="_blank" rel="noopener">suivante</a>.</p>
+</div>
+</div>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_références">1. Références</a></li>
+<li><a href="#_mise_en_place">2. Mise en place</a>
+<ul class="sectlevel2">
+<li><a href="#_récupération_des_sources">2.1. Récupération des sources</a></li>
+<li><a href="#_outillage">2.2. Outillage</a></li>
+<li><a href="#_création_du_projet">2.3. Création du projet</a></li>
+<li><a href="#_structure_de_départ">2.4. Structure de départ</a></li>
+</ul>
+</li>
+<li><a href="#_premiers_pas">3. Premiers pas</a>
+<ul class="sectlevel2">
+<li><a href="#_lancement_de_lapplication">3.1. Lancement de l&#8217;application</a></li>
+<li><a href="#_affichage_de_données">3.2. Affichage de données</a></li>
+<li><a href="#_gestion_de_composant">3.3. Gestion de composant</a></li>
+<li><a href="#_utilisation_de_classe_et_de_données">3.4. Utilisation de classe et de données</a></li>
+</ul>
+</li>
+<li><a href="#_directives">4. Directives</a>
+<ul class="sectlevel2">
+<li><a href="#_affichage_de_collection_déléments">4.1. Affichage de collection d&#8217;éléments</a></li>
+<li><a href="#_affichage_conditionnel_déléments">4.2. Affichage conditionnel d&#8217;éléments</a></li>
+<li><a href="#_classe_conditionnelle">4.3. Classe conditionnelle</a></li>
+</ul>
+</li>
+<li><a href="#_event_binding">5. <em>Event Binding</em></a></li>
+<li><a href="#_communication_inter_composants">6. Communication inter-composants</a>
+<ul class="sectlevel2">
+<li><a href="#_génération_du_service">6.1. Génération du service</a></li>
+<li><a href="#_injection_du_service">6.2. Injection du service</a></li>
+<li><a href="#_enregistrement_du_callback">6.3. Enregistrement du <em>callback</em></a></li>
+<li><a href="#_publication_déléments">6.4. Publication d&#8217;éléments</a></li>
+</ul>
+</li>
+<li><a href="#_pipes">7. <em>Pipes</em></a>
+<ul class="sectlevel2">
+<li><a href="#_création_de_pipe">7.1. Création de <em>pipe</em></a></li>
+<li><a href="#_utilisation_de_pipe">7.2. Utilisation de <em>pipe</em></a></li>
+</ul>
+</li>
+<li><a href="#_routage">8. Routage</a>
+<ul class="sectlevel2">
+<li><a href="#_création_de_module">8.1. Création de module</a></li>
+<li><a href="#_implémentation_des_routes">8.2. Implémentation des routes</a></li>
+<li><a href="#_affichage_des_fragments">8.3. Affichage des fragments</a></li>
+</ul>
+</li>
+<li><a href="#_module_client_http">9. Module Client HTTP</a>
+<ul class="sectlevel2">
+<li><a href="#_refactoring">9.1. <em>Refactoring</em></a></li>
+<li><a href="#_création_et_configuration_de_compte">9.2. Création et configuration de compte</a></li>
+<li><a href="#_utilisation_du_module">9.3. Utilisation du module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_références"><a class="anchor" href="#_références"></a>1. Références</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">En anglais : </dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://angular.io/tutorial/" target="_blank" rel="noopener">Tutorial: Tour of Heroes</a></p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mise_en_place"><a class="anchor" href="#_mise_en_place"></a>2. Mise en place</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Les étapes nécessaires pour bien démarrer le travail sont les suivantes.</p>
+</div>
+<div class="sect2">
+<h3 id="_récupération_des_sources"><a class="anchor" href="#_récupération_des_sources"></a>2.1. Récupération des sources</h3>
+<div class="paragraph">
+<p>Pour disposer des sources, utiliser <em>git</em> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone https://github.com/formations/angular-foundations</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>L&#8217;étape de départ est la branche <code>master</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_outillage"><a class="anchor" href="#_outillage"></a>2.2. Outillage</h3>
+<div class="paragraph">
+<p>Le <em>workshop</em> est un projet basé sur Angular.
+Pour travailler, les outils suivants sont requises :</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><a href="https://www.npmjs.com/" target="_blank" rel="noopener">npm</a></dt>
+</dl>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Il faut tout d&#8217;abord installer npm.
+Puis, installer les dépendances npm en local :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">npm install</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><a href="https://www.npmjs.com/package/@angular/cli" target="_blank" rel="noopener">@angular/cli</a></dt>
+</dl>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Il est nécessaire d&#8217;installer la ligne de commande (CLI) Angular:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">npm install -g @angular/cli</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Par rapport à AngularJS, Angular fournit tout le reste de l&#8217;outillage nécessaire du projet (transpilation TypeScript en JavaScript, tests, etc.).
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_du_projet"><a class="anchor" href="#_création_du_projet"></a>2.3. Création du projet</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Cette étape est à visée informative uniquement et peut être passée.
+En effet, le projet disponible a déjà pris soin de réaliser celle-ci.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_structure_de_départ"><a class="anchor" href="#_structure_de_départ"></a>2.4. Structure de départ</h3>
+<div class="paragraph">
+<p>La structure initiale du projet cloné est la suivante :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/project-structure.png" alt="Structure initiale du projet" width="230" height="684">
+</div>
+</div>
+<div class="paragraph">
+<p>Les principaux dossiers/fichiers sont les suivants :</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Dossier / fichier</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>e2e</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tests de bout-en-bout</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>node_modules</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Modules <em>node.js</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>src/app/about</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ecran A propos</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>src/app/comic-detail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ecran de détail de <em>comic</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>src/app/home</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ecran d&#8217;accueil</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>src/app/nav-bar</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Composant de barre de navigation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>src/app/tab-bar</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Composant de barre d&#8217;onglets</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>app.component.css</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Feuille de style du composant racine</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>app.component.html</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fragment HTML du composant racine</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>app.component.spec.ts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tests relatifs au composant racine</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>app.component.ts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code relatif au composant racine</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>app.module.ts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Module principal de l&#8217;application</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.ts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Données "bouchon"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>model.ts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Modèle de classes TypeScript</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>assets</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resources statiques, y compris les images</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>environments</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Liste des environnements disponibles.
+Par défaut, <em>dev</em> et <em>prod</em>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_premiers_pas"><a class="anchor" href="#_premiers_pas"></a>3. Premiers pas</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_lancement_de_lapplication"><a class="anchor" href="#_lancement_de_lapplication"></a>3.1. Lancement de l&#8217;application</h3>
+<div class="paragraph">
+<p>Dans le répertoire racine du projet, lancer l&#8217;application :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ng serve --open</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+L&#8217;option <code>--open</code> permet d&#8217;ouvrir automatiquement une fenêtre de navigateur.
+Si elle n&#8217;est pas utilisée, naviguer à <a href="http://localhost:4200/" class="bare">http://localhost:4200/</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Le résultat qui doit s&#8217;afficher est le suivant :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/initial-state.png" alt="Etat initial de l&#8217;application" width="345" height="200">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_affichage_de_données"><a class="anchor" href="#_affichage_de_données"></a>3.2. Affichage de données</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Objectif</div>
+Le but de cette section est d&#8217;afficher les attributs du composant racine dans la page.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Voici le code source du composant racine :</p>
+</div>
+<div class="listingblock">
+<div class="title">src/app/app.component.ts</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">import { Component } from '@angular/core';            <i class="conum" data-value="1"></i><b>(1)</b>
+
+@Component({
+  selector: 'app-root',                               <i class="conum" data-value="2"></i><b>(2)</b>
+  templateUrl: './app.component.html',                <i class="conum" data-value="3"></i><b>(3)</b>
+  styleUrls: ['./app.component.css']                  <i class="conum" data-value="4"></i><b>(4)</b>
+})
+export class AppComponent {                           <i class="conum" data-value="5"></i><b>(5)</b>
+  title = 'app';                                      <i class="conum" data-value="6"></i><b>(6)</b>
+  id = 21464;                                         <i class="conum" data-value="6"></i><b>(6)</b>
+  title = 'Powers (2000)';                            <i class="conum" data-value="6"></i><b>(6)</b>
+  issueNumber = 18;                                   <i class="conum" data-value="6"></i><b>(6)</b>
+  thumbnail = 'image/image_not_available.jpg';        <i class="conum" data-value="6"></i><b>(6)</b>
+  price = 3.45;                                       <i class="conum" data-value="6"></i><b>(6)</b>
+  description = 'Walker and Pilgrim investigate...';  <i class="conum" data-value="6"></i><b>(6)</b>
+ }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>TypeScript nécessite l&#8217;utilisation d&#8217;imports.
+Dans le cas contraire, le type ne peut pas être utilisé.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Sélecteur HTML qui doit être ajouté dans la page pour afficher le fragment HTML</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Fragment HTML associée au composant.
+C&#8217;est le contenu de ce fichier HTML qui sera ajouté à la page web.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Feuille de style associée au composant</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Le mot-clé <code>export</code> est nécessaire pour que le composant soit utilisé</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Attributs disponibles dans le composant HTML</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>En utilisant la syntaxe <code>{{ }}</code>, afficher les attributs dans la page.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/app/app.component.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;div class="container"&gt;
+  &lt;h1&gt;Comics Library&lt;/h1&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-xs-12"&gt;
+      &lt;div class="media"&gt;
+        &lt;img class="mr-3" alt="Comic cover"&gt;                        <i class="conum" data-value="1"></i><b>(1)</b>
+        &lt;div class="media-body"&gt;
+          &lt;h2 class="media-heading"&gt;                                <i class="conum" data-value="2"></i><b>(2)</b>
+            &lt;span class="badge badge-danger"&gt;#                      <i class="conum" data-value="3"></i><b>(3)</b>
+            &lt;span class="badge badge-pill badge-secondary"&gt;$&lt;/span&gt; <i class="conum" data-value="4"></i><b>(4)</b>
+          &lt;/h2&gt;
+          &lt;p&gt;&lt;/p&gt;                                                   <i class="conum" data-value="5"></i><b>(5)</b>
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Ajouter l&#8217;attribut <code>src</code> pour afficher l&#8217;image du composant
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Les images se trouvent dans le répertoire <code>assets</code>
+</td>
+</tr>
+</table>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Afficher l&#8217;attribut <code>title</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Afficher l&#8217;attribut <code>issueNumber</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Afficher l&#8217;attribut <code>price</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Afficher l&#8217;attribut <code>description</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Le résultat attendu est le suivant :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/simple-data-display.png" alt="Etat initial de l&#8217;application" width="772" height="275">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gestion_de_composant"><a class="anchor" href="#_gestion_de_composant"></a>3.3. Gestion de composant</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Objectif</div>
+Le but de cette section est de créer un composant personnalisé.
+</td>
+</tr>
+</table>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Création de composants : </dt>
+</dl>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>La création de composants se fait via la ligne de commande.
+Pour créer un composant nommé <code>comicsList</code>, utiliser la commande suivante :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ng generate component comicsList</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Après l&#8217;exécution de la commande, un nouveau répertoire <code>src/app/comics-list</code> a été généré qui contient les fichiers suivants :</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Fichier</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comics-list.component.css</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Feuille de style du composant liste</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comics-list.component.html</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fragment HTML du composant liste</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comics-list.component.spec.ts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tests relatifs au composant liste</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comics-list.component.ts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code relatif au composant liste</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Personnalisation : </dt>
+</dl>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Par défaut :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>le nom de la classe est <code>ComicslistComponent</code> dans le code</p>
+</li>
+<li>
+<p>et le sélecteur <code>&lt;app-comics-list&gt;</code></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Il est conseillé d&#8217;utiliser un préfixe quel qu&#8217;il soit, afin d&#8217;éviter que des balises de bibliothèques différentes aient le même nom.
+Le préfixe par défaut est <em>app</em>
+Il est configuré dans le fichier <code>angular.json</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Utilisation du composant : </dt>
+</dl>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Déplacer le code du composant depuis le composant racine <code>app.component</code> vers le nouveau composant créé.
+Puis modifier le composant racine ainsi :</p>
+</div>
+<div class="listingblock">
+<div class="title">src/app/app.component.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;div class="container"&gt;
+  &lt;h1&gt;Comics Library&lt;/h1&gt;
+  &lt;app-comics-list&gt;&lt;/app-comics-list&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Ajout du sélecteur, qui va afficher le fragment HTML sur la page</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>L&#8217;affichage doit être exactement similaire à l&#8217;affichage de l&#8217;étape précédente.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_utilisation_de_classe_et_de_données"><a class="anchor" href="#_utilisation_de_classe_et_de_données"></a>3.4. Utilisation de classe et de données</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Remplacer les différents attributs de la classe <code>ComicsListComponent</code> par un unique attribut de type <code>SimpleComic</code> :</p>
+<div class="listingblock">
+<div class="title">src/app/comics-list/comics-list.component.ts</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">export class ComicsListComponent {
+
+  comic: SimpleComic = {                               <i class="conum" data-value="1"></i><b>(1)</b>
+    id: 21464,
+    title: 'Powers (2000)',
+    issueNumber: 18,
+    thumbnail: 'image/image_not_available.jpg',
+    price: 3.45,
+    description: 'Walker and Pilgrim investigate...'
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Remplacement des différent attributs par un unique attribut</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>La classe <code>SimpleComic</code> est déclarée dans le fichier <code>model.ts</code>.
+Ne pas oublier de l&#8217;importer.</p>
+</div>
+<div class="paragraph">
+<p>Modifier le composant HTML en conséquence.</p>
+</div>
+</li>
+<li>
+<p>Remplacer la définition de la donnée dans le composant par la constante <code>COMIC</code> :</p>
+<div class="listingblock">
+<div class="title">src/app/comics-list/comics-list.component.ts</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">export class ComicsListComponent {
+
+  comic: SimpleComic = COMIC; <i class="conum" data-value="1"></i><b>(1)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Utilisation de la constante existante</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>La constante <code>COMIC</code> est déclarée dans le fichier <code>data.ts</code>.
+Ne pas oublier de l&#8217;importer.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Au cours des deux manipulations précédentes, l&#8217;affichage doit être similaire à l&#8217;étape précédente.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_directives"><a class="anchor" href="#_directives"></a>4. Directives</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_affichage_de_collection_déléments"><a class="anchor" href="#_affichage_de_collection_déléments"></a>4.1. Affichage de collection d&#8217;éléments</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Objectif</div>
+Le but de cette section est d&#8217;afficher non plus un unique <em>comic</em> mais une collection de ceux-ci.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Dans la classe <code>ComicsListComponent</code> :</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Modifier l&#8217;attribut <code>comic</code> de type <code>SimpleComic</code> en attribut <code>comics</code> de type <code>Comic[]</code></p>
+<div class="listingblock">
+<div class="title">src/app/comics-list/comics-list.component.ts</div>
+<div class="content">
+<pre>export class ComicsListComponent {
+
+  comic: SimpleComic = COMIC; <i class="conum" data-value="1"></i><b>(1)</b>
+}</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Modifier cette ligne</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Affecter la constante <code>COMICS</code> du fichier <code>data.ts</code> à ce dernier.
+Ne pas oublier l&#8217;import !</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Modifier le fragment HTML pour boucler sur les éléments de la collection en utilisant la directive <a href="https://angular.io/api/common/NgForOf" target="_blank" rel="noopener"><code>ngForOf</code></a></p>
+<div class="listingblock">
+<div class="title">src/app/comics-list/comics-list.component.html</div>
+<div class="content">
+<pre>&lt;ul class="list-unstyled"&gt;
+    &lt;li class="media mt-5"&gt;                                              <i class="conum" data-value="1"></i><b>(1)</b>
+        &lt;img class="mr-3" alt="Comic cover"&gt;                             <i class="conum" data-value="2"></i><b>(2)</b>
+        &lt;div class="media-body"&gt;
+            &lt;h2 class="media-heading"&gt;                                   <i class="conum" data-value="3"></i><b>(3)</b>
+                &lt;span class="badge badge-danger"&gt;#&lt;/span&gt;                <i class="conum" data-value="4"></i><b>(4)</b>
+                &lt;span class="badge badge-pill badge-secondary"&gt;$&lt;/span&gt;  <i class="conum" data-value="5"></i><b>(5)</b>
+            &lt;/h2&gt;
+            &lt;p&gt;&lt;/p&gt;                                                      <i class="conum" data-value="6"></i><b>(6)</b>
+        &lt;/div&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Boucler sur les <em>comics</em> de la collection</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Utiliser l&#8217;attribut <code>src</code> pour afficher l&#8217;image</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Afficher le titre</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Afficher le numéro</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Afficher le prix</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Afficher la description</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+La structure des classes <code>SimpleComic</code> et <code>Comic</code> est légèrement différente.
+Par exemple, le chemin de l&#8217;image n&#8217;est plus stocké dans un attribut de type simple <code>string</code>, mais dans un type qui comporte deux attributs, <code>path</code> et <code>extension</code>.
+Adapter le <em>binding</em> pour refléter la nouvelle structure.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Le résultat attendu est le suivant :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/collection-display.png" alt="Affichage d&#8217;une collection d&#8217;éléments" width="772" height="792">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_affichage_conditionnel_déléments"><a class="anchor" href="#_affichage_conditionnel_déléments"></a>4.2. Affichage conditionnel d&#8217;éléments</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Objectif</div>
+Le but de cette section est d&#8217;afficher un élément si une condition est vraie.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Dans l&#8217;état actuel, le prix est affiché dans tous les cas.
+Or, il peut s&#8217;avérer que le prix ne soit pas renseigné (<code>price: 0</code>).
+Dans ce cas, il ne fait pas de sens de l&#8217;afficher.</p>
+</div>
+<div class="paragraph">
+<p>Dans le fragment HTML, utiliser la directive <a href="https://angular.io/api/common/NgIf" target="_blank" rel="noopener"><code>ngIf</code></a> pour afficher le prix uniquement si celui est supérieur strictement à 0.</p>
+</div>
+<div class="paragraph">
+<p>Le résultat attendu est le suivant :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/conditional-display.png" alt="Affichage conditionnel du prix" width="772" height="541">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_classe_conditionnelle"><a class="anchor" href="#_classe_conditionnelle"></a>4.3. Classe conditionnelle</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Objectif</div>
+Le but de cette section est d&#8217;appliquer une classe CSS à un élément si une condition est vraie.
+</td>
+</tr>
+</table>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Préparation : </dt>
+</dl>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Le composant de barre d&#8217;onglets a déjà été créé et est prêt à être utilisé.
+L&#8217;ajouter au fragment HTML racine :</p>
+</div>
+<div class="listingblock">
+<div class="title">app.component.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;div class="container"&gt;
+    &lt;h1&gt;Comics Library&lt;/h1&gt;
+    &lt;app-tab-bar&gt;&lt;/app-tab-bar&gt;         <i class="conum" data-value="1"></i><b>(1)</b>
+    &lt;app-comics-list&gt;&lt;/app-comics-list&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Ajouter le composant de barre d&#8217;onglets</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Le résultat attendu est le suivant :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/start-tab.png" alt="Affichage initial des onglets" width="772" height="592">
+</div>
+</div>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Gestion de l&#8217;état "sélectionné" : </dt>
+</dl>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Modifier la classe <code>TabBarComponent</code> ainsi :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Créer un attribut <code>selectedIndex</code> de type <code>number</code> initialisé à <code>0</code></p>
+</li>
+<li>
+<p>Créer une fonction <code>isSelected(index: number): boolean</code> qui retourne :</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>true</code> si <code>index</code> est égal à <code>selectedIndex</code></p>
+</li>
+<li>
+<p><code>false</code> sinon</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Mise en exergue de l&#8217;onglet sélectionné : </dt>
+</dl>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Utiliser la directive <a href="https://angular.io/api/common/NgClass" target="_blank" rel="noopener"><code>ngClass</code></a> pour faire en sorte que la classe CSS <code>active</code> soit affecté à l&#8217;onglet si et seulement s&#8217;il est sélectionné.</p>
+</div>
+<div class="paragraph">
+<p>Le résultat attendu est le suivant :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/highlight-tab.png" alt="Highlight de l&#8217;onglet sélectionné" width="772" height="592">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_event_binding"><a class="anchor" href="#_event_binding"></a>5. <em>Event Binding</em></h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Objectif</div>
+Le but de cette section est d&#8217;associer l&#8217;appel d&#8217;une fonction au clic sur un élément.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Dans la classe <code>TabBarComponent</code>, créer une fonction <code>select(index: number)</code> qui modifie l&#8217;attribut <code>selectedIndex</code> avec l&#8217;index passé en paramètre</p>
+</li>
+<li>
+<p>Modifier le fragment HTML pour qu&#8217;un clic sur l&#8217;onglet appelle la méthode précédente</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Le résultat attendu est le suivant :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/select-tab.png" alt="Sélection de l&#8217;onglet" width="772" height="592">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_communication_inter_composants"><a class="anchor" href="#_communication_inter_composants"></a>6. Communication inter-composants</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Objectif</div>
+Le but de cette section est d&#8217;envoyer des informations depuis le composant onglet vers le composant liste.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A cette étape, le composant onglet connaît l&#8217;onglet sélectionné, et doit en faire part au composant liste lorsqu&#8217;il change.
+Plusieurs méthodes sont disponibles pour l&#8217;interaction de 2 composants.
+Comme l&#8217;onglet et la liste n&#8217;ont pas de relation parent-enfant, un service intermédiaire est requis.</p>
+</div>
+<div class="paragraph">
+<p>Voici le diagramme qui va être implémenté :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/service-communication-sequence-diagram.svg" alt="service communication sequence diagram" width="882" height="374">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_génération_du_service"><a class="anchor" href="#_génération_du_service"></a>6.1. Génération du service</h3>
+<div class="paragraph">
+<p>A l&#8217;instar des composants, les services sont créés à l&#8217;aide de la ligne de commande.</p>
+</div>
+<div class="paragraph">
+<p>Créer un service <code>tab</code> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ng generate service tab</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Après l&#8217;exécution de la commande, les fichiers suivants ont été créés :</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Fichier</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tab.service.ts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tests relatifs au service</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tab.service.ts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code du service</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>En tant qu&#8217;intermédiaire, le service doit permettre de publier et de souscrire à des évènements.
+Angular intègre nativement le framework <a href="https://rxjs-dev.firebaseapp.com/" target="_blank" rel="noopener">RxJs</a>.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Il est toujours nécessaire d&#8217;utiliser <code>import</code> pour utiliser les objets d&#8217;un autre espace de nommage.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Le service doit adopter la conception suivante :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/tab-service-class-diagram.svg" alt="tab service class diagram" width="600" height="225">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>l&#8217;attribut <code>titleChangedSource</code> est un nouvel objet de type <code>Subject&lt;string&gt;</code></p>
+</li>
+<li>
+<p>l&#8217;attribut <code>titleChanged$</code> est le même objet que l&#8217;objet précédent, mais trans-typé en <code>Observable&lt;String&gt;</code></p>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Par convention, les attributs de type <code>Observable</code> sont suffixés par <code>$</code>.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>la fonction <code>changeTitle(title: string)</code> appelle la fonction <code>next()</code> de <code>titleChangedSource</code> avec comme paramètre <code>title</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_injection_du_service"><a class="anchor" href="#_injection_du_service"></a>6.2. Injection du service</h3>
+<div class="paragraph">
+<p>Avec Angular, les services ne sont pas instanciés manuellement mais par le framework (comme les composants).
+Il est donc nécessaire d&#8217;injecter l&#8217;instance existante dans les composants.</p>
+</div>
+<div class="paragraph">
+<p>Pour ce faire, modifier le constructeur des composants <code>TabComponent</code> et <code>ComicsListComponent</code> en passant le type demandé :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">export class XComponent {
+
+  constructor(tabService: TabService) { }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enregistrement_du_callback"><a class="anchor" href="#_enregistrement_du_callback"></a>6.3. Enregistrement du <em>callback</em></h3>
+<div class="paragraph">
+<p>Le composant <code>ComicsListComponent</code> joue le rôle d' <em>Observer</em>:
+il doit enregistrer à l&#8217;initialisation une fonction de <em>callback</em> qui sera appelée à chaque fois que le titre sera modifié.
+L&#8217;initialisation se fait via l&#8217;implémentation de l&#8217;interface <code>OnInit</code>, et sa fonction associée <code>ngOnInit()</code>.</p>
+</div>
+<div class="paragraph">
+<p>Pour s&#8217;abonner aux changements, utiliser la fonction <code>subscribe()</code> avec comme paramètre une fonction de <em>callback</em> dont l&#8217;algorithme est le suivant :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>SI</em> le paramètre est <code>null</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p><em>ALORS</em> retourner la liste complète</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>SINON</em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>retourner uniquement la liste de comics dont le titre contient le paramètre</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Consulter la documentation de la méthode <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/filter" target="_blank" rel="noopener"><code>filter()</code></a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_publication_déléments"><a class="anchor" href="#_publication_déléments"></a>6.4. Publication d&#8217;éléments</h3>
+<div class="paragraph">
+<p>Modifier l&#8217;implémentation de la fonction <code>TabComponent.select()</code> pour qu&#8217;elle appelle la fonction <code>TabService.changeTitle(title: string)</code> avec le paramètre correct.</p>
+</div>
+<div class="paragraph">
+<p>Le résultat attendu est le suivant :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/filter-tab.png" alt="Filtrage de la collection en fonction de l&#8217;onglet" width="772" height="592">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pipes"><a class="anchor" href="#_pipes"></a>7. <em>Pipes</em></h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Objectif</div>
+Le but de cette section est d&#8217;implémenter un <a href="https://angular.io/guide/pipes" target="_blank" rel="noopener"><em>pipe</em></a> Angular.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Jusqu&#8217;à présent, les <em>comics</em> ne sont pas ordonnés.
+Il serait souhaitable qu&#8217;ils le soient, d&#8217;abord par titre, puis par numéro dans le titre.</p>
+</div>
+<div class="paragraph">
+<p>Une solution pour aboutir à cela est d&#8217;appeler la fonction <code>sort()</code> (avec comme paramètre un comparateur) à chaque fois que l&#8217;on retourne la collection de <em>comics</em>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Fonction comparateur</div>
+<div class="paragraph">
+<p>La fonction comparateur passée en argument de la fonction <code>sort()</code> accepte deux arguments - les éléments à comparer et retourne :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>un entier positif si le premier élément est "supérieur" au second</p>
+</li>
+<li>
+<p>un entier négatif s&#8217;il est "inférieur"</p>
+</li>
+<li>
+<p>0 si les deux éléments sont égaux</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A titre d&#8217;exemple, voici le code source de la fonction comparateur qui compare deux <em>comics</em>, d&#8217;abord en fonction de leur attribut <em>title</em>, puis de leur attribut <em>issueNumber</em> en cas d&#8217;égalité.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">private byTitle = (comic1, comic2) =&gt; {
+  let byTitle = comic1.title.localeCompare(comic2.title);
+  if (byTitle == 0) {
+    return comic1.issueNumber - comic2.issueNumber;
+  }
+  return byTitle;
+}</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Le problème d&#8217;appeler la fonction <code>sort()</code> explicitement est qu&#8217;il est possible d&#8217;oublier un tel appel.
+La solution proposée par Angular est de configurer le filtre sur le fragment HTML via un <em>pipe</em>.</p>
+</div>
+<div class="sect2">
+<h3 id="_création_de_pipe"><a class="anchor" href="#_création_de_pipe"></a>7.1. Création de <em>pipe</em></h3>
+<div class="paragraph">
+<p>Comme précédemment, la création de <em>pipe</em> se fait via la ligne de commande.</p>
+</div>
+<div class="paragraph">
+<p>Pour créer un <em>pipe</em> nommé <code>sortByTitle</code>, utiliser la commande suivante :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ng generate pipe sortByTitle</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le résultat est le suivant :</p>
+</div>
+<div class="listingblock">
+<div class="title">src/app/sort-by-title.pipe.ts</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({                                                  <i class="conum" data-value="1"></i><b>(1)</b>
+  name: 'sortByTitle'                                    <i class="conum" data-value="2"></i><b>(2)</b>
+})
+export class SortByTitlePipe implements PipeTransform {  <i class="conum" data-value="3"></i><b>(3)</b>
+
+  transform(value: any, args?: any): any {               <i class="conum" data-value="4"></i><b>(4)</b>
+    return null;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Identifie la classe comme un <em>pipe</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Nom du <em>pipe</em> à utiliser dans le fragment HTML</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>L&#8217;interface est optionelle, mais conseillée</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>La fonction <code>transform()</code> est essentielle au <em>pipe</em>.
+Le paramètre <code>value</code> représente l&#8217;entrée, et la valeur retournée par la fonction la sortie.
+Le paramètre <code>args?</code> permet d&#8217;ajouter des paramètres au <em>pipe</em>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Adapter la signature de la fonction pour trier la collection de comics comme ci-dessus.
+Puis, réutiliser la méthode <code>byTitle()</code> à bon escient.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_utilisation_de_pipe"><a class="anchor" href="#_utilisation_de_pipe"></a>7.2. Utilisation de <em>pipe</em></h3>
+<div class="paragraph">
+<p>L&#8217;utilisation de <em>pipe</em> dans le fragment HTML se fait via l&#8217;utilisation du symbole <code>|</code> puis le nom du <em>pipe</em>.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/app/comicslist.component.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;li class="media mt-5" *ngFor="let comic of comics | sortByTitle"&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Le résultat attendu est le suivant :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/sort-tab.png" alt="Tri de la collection" width="772" height="592">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_routage"><a class="anchor" href="#_routage"></a>8. Routage</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Objectif</div>
+Le but de cette section est d&#8217;associer des éléments cliquables à des composants, de telle sorte qu&#8217;un clic sur un tel élément affiche le composant associé.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_création_de_module"><a class="anchor" href="#_création_de_module"></a>8.1. Création de module</h3>
+<div class="paragraph">
+<p>En plus des composants et des services, les modules sont créés à la ligne de commande.
+Créer un module <code>routing</code> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ng generate module routing  --flat --module=app</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Signification des options</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>--flat</code> : </dt>
+<dd>
+<p>Crée le nouveau module à la racine du répertoire <code>app</code> plutôt que dans un sous-module</p>
+</dd>
+<dt class="hdlist1"><code>--module</code> : </dt>
+<dd>
+<p>Importe le nouveau module dans le module principal de l&#8217;application</p>
+</dd>
+</dl>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>L&#8217;exécution de la commande crée les fichiers suivants :</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Fichier</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routing.module.specs.ts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tests relatifs au module</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>routing.module.ts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code du module</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Dès lors que l&#8217;application comporte plus d&#8217;un module, la génération d&#8217;un nouveau fichier via <code>ng generate</code> nécessite d&#8217;indiquer le module auquel celui-ci sera rattaché
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_implémentation_des_routes"><a class="anchor" href="#_implémentation_des_routes"></a>8.2. Implémentation des routes</h3>
+<div class="paragraph">
+<p>Implémenter les routes suivantes :</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Chemin</th>
+<th class="tableblock halign-left valign-top">Composant</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HomeComponent</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comics</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ComicsListComponent</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>about</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>AboutComponent</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Les composants <code>HomeComponent</code> et <code>AboutComponent</code> sont respectivement disponibles dans les répertoires <code>home</code> et <code>about</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Utiliser les routes définies précédemment dans le fragment <code>src/app/nav-bar/nav-bar.component.html</code> à l&#8217;aide de la directive <a href="https://angular.io/api/router/RouterLink" target="_blank" rel="noopener"><code>routerLink</code></a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_affichage_des_fragments"><a class="anchor" href="#_affichage_des_fragments"></a>8.3. Affichage des fragments</h3>
+<div class="paragraph">
+<p>Au niveau de l&#8217;affichage du composant <code>app.component.html</code> :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Supprimer la balise <code>&lt;h1&gt;</code></p>
+</li>
+<li>
+<p>Ajouter le fragment <code>&lt;app-nav-bar&gt;</code> à la racine</p>
+</li>
+<li>
+<p>Déplacer le fragment <code>&lt;app-tab-bar&gt;</code> au niveau du composant <code>comics-list.component.html</code></p>
+</li>
+<li>
+<p>Remplacer le fragment <code>&lt;app-comics-list&gt;</code> par le fragment dédié au routage</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Le résultat attendu est le suivant :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/navigation-bar.png" alt="Utilisation de la barre de navigation" width="1003" height="424">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_module_client_http"><a class="anchor" href="#_module_client_http"></a>9. Module Client HTTP</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Objectif</div>
+Le but de cette section est d&#8217;utiliser le module client HTTP pour récupérer les données d&#8217;un serveur en lieu et place des donnée statiques.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_refactoring"><a class="anchor" href="#_refactoring"></a>9.1. <em>Refactoring</em></h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Nettoyage du code : </dt>
+</dl>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>D&#8217;un point de vue conceptuel, un composant ne doit pas gérer lui-même de données, mais utiliser un service pour cela.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Créer un service <code>comic</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ng generate service comic</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Dans le nouveau service <code>ComicService</code>, créer une fonction <code>getComics()</code> qui retourne la constante <code>COMICS</code></p>
+</li>
+<li>
+<p>Dans le composant <code>ComicsListComponent</code>, remplacer l&#8217;utilisation de cette dernière par le service</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Changement de type : </dt>
+</dl>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>Le module client HTTP utilise des types de retour asynchrones - <code>Observable</code>.
+Il est nécessaire d&#8217;adapter la chaîne de traitement dès à présent.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Dans la classe <code>ComicService</code>, remplacer le type de retour de la fonction <code>getComics()</code> de <code>Comics[]</code> à <code>Observable&lt;Comic[]&gt;</code></p>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Utiliser la fonction <a href="https://rxjs-dev.firebaseapp.com/api/index/of" target="_blank" rel="noopener"><code>of</code></a>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Adapter la classe <code>ComicListComponent</code> :</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Modifier le type de l&#8217;attribut <code>comics</code> en <code>Observable&lt;Comic[]&gt;</code></p>
+</li>
+<li>
+<p>Modifier son nom en <code>comics$</code></p>
+</li>
+<li>
+<p>Adapter l&#8217;implémentation de la fonction <code>ngInit()</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Pour disposer d&#8217;un tableau dans le fragment HTML, utiliser le <a href="https://angular.io/api/common/AsyncPipe" target="_blank" rel="noopener"><em>pipe</em> <code>async</code></a></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_création_et_configuration_de_compte"><a class="anchor" href="#_création_et_configuration_de_compte"></a>9.2. Création et configuration de compte</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>La première étape consiste à créer un compte développeur sur <a href="https://www.marvel.com/signin?referer=https%3A%2F%2Fdeveloper.marvel.com%2F" target="_blank" rel="noopener">developer.marvel.com</a>.</p>
+</li>
+<li>
+<p>Puis, récupérer la <a href="https://developer.marvel.com/account" target="_blank" rel="noopener">clé d&#8217;API publique</a>.</p>
+</li>
+<li>
+<p>Ne pas oublier de mettre à jour la liste des site habilités avec <code>localhost</code>.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/marvel-account.png" alt="Marvel Comics developer account" width="493" height="615">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_utilisation_du_module"><a class="anchor" href="#_utilisation_du_module"></a>9.3. Utilisation du module</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Dans la classe <code>AppModule</code>, importer le module <code>HttpClientModule</code> depuis <code>@angular/common/http</code></p>
+</li>
+<li>
+<p>Abandonner la notion d&#8217;onglets.
+Dans le fragment <code>comics-list.component.html</code>, supprimer <code>&lt;app-tab-bar&gt;</code></p>
+</li>
+<li>
+<p>Abandonner le filtre.
+Supprimer également l&#8217;utilisation du <em>pipe</em> <code>sortByTitle</code> (mais pas celle du <em>pipe</em> <code>async</code> !)</p>
+</li>
+<li>
+<p>Dans le fichier <code>environment.ts</code>, créer deux entrées supplémentaires :</p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Clé</th>
+<th class="tableblock halign-left valign-top">Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>baseUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"https://gateway.marvel.com:443"</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apiKey</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clé d&#8217;API disponible sur <a href="https://developer.marvel.com/account" target="_blank" rel="noopener">marvel.com</a></p></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Dans le service <code>ComicService</code>, injecter le service <code>HttpClient</code>.
+Utiliser ce dernier en conjonction avec les paramètres d&#8217;environnement pour exécuter <a href="https://developer.marvel.com/docs#!/public/getComicsCollection_get_6" target="_blank" rel="noopener">la requête qui retourne la liste des comics</a>.</p>
+</li>
+<li>
+<p>Dans le composant <code>ComicsListComponent</code>, injecter le service <code>ComicService</code> et supprimer l&#8217;injection du <code>TabService</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Le résultat attendu doit être semblable à la copie d&#8217;écran suivante :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/marvel-comics-list.png" alt="Affichage de la liste des comics depuis le serveur" width="402" height="796">
+</div>
+</div>
+<div class="paragraph">
+<p>Une fois la liste affichée, modifier le code pour qu&#8217;un clic sur un comics affiche son détail.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Utiliser le composant <code>comic-detail.component</code> et <a href="../cours/index.html#chemin_paramtr">les routes avec paramètres</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Voici un exemple de résultat attendu :</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="images/marvel-comic-detail.png" alt="Affichage d&#8217;un comic depuis le serveur" width="602" height="623">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-08-01 19:23:21 UTC
+</div>
+</div>
+<link rel="stylesheet" href="../highlight/styles/github.min.css">
+<script src="../highlight/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
+</body>
+</html>

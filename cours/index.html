@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="author" content="Nicolas Frankel"><title>Cours Angular</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/theme/white.css" id="theme"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"><link href="../highlight/styles/github.min.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/pdf.css" : "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/html5shiv.js"></script><![endif]--><link rel="stylesheet" href="style.css"></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title"><h1>Cours Angular</h1><p class="author"><small>Nicolas Frankel</small></p></section><section><section id="historique_html"><h2>Historique HTML</h2><div class="ulist"><ul><li><p>Statique</p></li><li><p>Dynamique et généré côté serveur</p><div class="ulist"><ul><li><p>p.e. PHP</p></li></ul></div></li><li><p>Ajout de logique côté client</p><div class="ulist"><ul><li><p>JavaScript</p></li></ul></div></li></ul></div></section><section id="architecture_actuelle"><h2>Architecture actuelle</h2><div class="ulist"><ul><li><p>Données générées côté serveur</p></li><li><p>Mise à disposition via REST/JSON</p></li><li><p>Logique côté client</p><div class="ulist"><ul><li><p>JavaScript</p></li></ul></div></li></ul></div></section><section id="frameworks_et_librairies_javascript"><h2>Frameworks et librairies Javascript</h2><div class="ulist"><ul><li><p><a href="https://jquery.com/" target="_blank">jQuery</a></p></li><li><p><a href="https://mootools.net/" target="_blank">MooTools</a></p></li><li><p><a href="https://dojotoolkit.org/" target="_blank">Dojo Toolkit</a></p></li><li><p><a href="https://www.emberjs.com/" target="_blank">Ember</a></p></li><li><p><a href="https://vuejs.org/" target="_blank">Vue.js</a></p></li><li><p><a href="https://reactjs.org/" target="_blank">React</a></p></li><li><p>etc.</p></li></ul></div></section><section id="tendances"><h2>Tendances</h2><div class="imageblock stretch" style=""><img src="images/google-trends.png" alt="google trends" height="100%"></div></section></section>
+<section><section id="angular"><h2>Angular</h2><div class="ulist"><ul><li><p>Conçu comme projet 20% chez Google</p></li><li><p>Par Miško Hevery</p></li></ul></div></section><section id="angularjs_2_4_5_ou_6"><h2>AngularJS, 2, 4, 5 ou 6 ?</h2><div class="ulist"><ul><li><p>AngularJS:</p><div class="ulist"><ul><li><p>Beaucoup de projets en maintenance</p></li></ul></div></li><li><p>Angular 2, 4, 5, 6</p><div class="ulist"><ul><li><p>Basés sur TypeScript</p></li><li><p>Basés sur les composants</p></li></ul></div></li></ul></div></section><section id="concepts_angular"><h2>Concepts Angular</h2><div class="dlist"><dl><dt class="hdlist1"><em>Component</em> </dt><dd><p>Ensemble constitué d&#8217;une vue, de données et de la logique associée.
+Toute application a au moins un composant racine</p></dd><dt class="hdlist1">Service </dt><dd><p>Fournit des fonctionnalités qui ne sont pas liées aux vues.
+Utilisé par des composants, via l&#8217;injection</p></dd></dl></div></section><section><div class="dlist"><dl><dt class="hdlist1">Module </dt><dd><p>Collection de code lié fonctionnellement.
+Toute application a au moins un module racine</p></dd></dl></div></section><section id="architecture_gnrale"><h2>Architecture générale</h2><div class="imageblock stretch" style=""><img src="https://angular.io/generated/images/guide/architecture/overview2.png" alt="overview2" height="100%"></div></section></section>
+<section><section id="component"><h2><em>Component</em></h2><div class="paragraph"><p>Contrôle un bout d&#8217;écran appelée vue</p></div></section><section id="gnration_de_composant"><h2>Génération de composant</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="bash language-bash">ng generate component &lt;name&gt;</code></pre></div></div></section><section id="fichiers_gnrs"><h2>Fichiers générés</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Fichier</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>foo.component.html</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Fragment HTML</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>foo.component.css</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Feuille de style</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>foo.component.ts</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Classe associée</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>foo.component.spec.ts</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Test de la classe</p></td></tr></table></section><section id="classe_de_composant"><h2>Classe de composant</h2><div class="paragraph"><p>Classe annotée avec le décorateur <code>@Component</code></p></div></section><section id="exemple"><h2>Exemple</h2><div class="listingblock"><div class="title">foo/foo.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Component({
+  selector:    'app-foo',             <i class="conum" data-value="1"></i><b>(1)</b>
+  templateUrl: './foo.component.html' <i class="conum" data-value="2"></i><b>(2)</b>
+})
+export class FooComponent {
+    /* ... */
+}</code></pre></div></div>
+<div class="colist arabic"><table><tr><td><i class="conum" data-value="1"></i><b>1</b></td><td>Identifie la balise pour inclure le fragment</td></tr><tr><td><i class="conum" data-value="2"></i><b>2</b></td><td>Référence le fichier de fragment HTML</td></tr></table></div></section><section id="fragment_html"><h2>Fragment HTML</h2><div class="ulist"><ul><li><p>Appelé <em>template</em> dans la documentation</p></li><li><p>Permet l&#8217;utilisation d&#8217;une syntaxe spécifique</p></li></ul></div></section><section id="exemple_2"><h2>Exemple</h2><div class="listingblock"><div class="title">foo/foo.component.html</div><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;p&gt;Please select an item&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li *ngFor="let foo of foos" (click)="select(foo)"&gt;
+    {{foo.bar}}
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre></div></div></section><section id="fragment_intgr"><h2>Fragment intégré</h2><div class="paragraph"><p>Attribut <code>template</code> au lieu de <code>templateUrl</code></p></div></section><section id="exemple_3"><h2>Exemple</h2><div class="listingblock"><div class="title">foo/foo.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Component({
+  selector: 'app-foo',
+  template: '&lt;p&gt;Hello {{ bar }}&lt;/p&gt;' <i class="conum" data-value="1"></i><b>(1)</b>
+})
+export class FooComponent {
+    bar: string;
+}</code></pre></div></div>
+<div class="colist arabic"><table><tr><td><i class="conum" data-value="1"></i><b>1</b></td><td>Fragment intégré</td></tr></table></div></section><section id="data_binding"><h2><em>Data binding</em></h2><div class="imageblock stretch" style=""><img src="https://angular.io/generated/images/guide/architecture/databinding.png" alt="databinding" height="100%"></div></section></section>
+<section><section id="interpolation"><h2>Interpolation</h2><div class="ulist"><ul><li><p>Référencée par des accolades doubles <code>{{ }}</code></p></li><li><p>Affiche l&#8217;attribut référencé</p></li></ul></div></section><section id="exemple_dinterpolation"><h2>Exemple d&#8217;interpolation</h2><div class="listingblock"><div class="title">foo/foo.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  bar: string = "world"
+}</code></pre></div></div>
+<div class="listingblock"><div class="title">foo/foo.component.html</div><div class="content"><pre class="highlight"><code data-noescape class="html language-html">Hello {{ bar }}!</code></pre></div></div></section><section id="un_autre_exemple"><h2>Un autre exemple</h2><div class="listingblock"><div class="title">foo.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">export class Foo {
+  bar: string = "world"
+}</code></pre></div></div>
+<div class="listingblock"><div class="title">foo/foo.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  foo: Foo = new Foo();
+}</code></pre></div></div>
+<div class="listingblock"><div class="title">foo/foo.component.html</div><div class="content"><pre class="highlight"><code data-noescape class="html language-html">Hello {{ foo.bar }}!</code></pre></div></div></section></section>
+<section><section id="directives"><h2>Directives</h2><div class="paragraph"><p>Classe permettant d&#8217;ajouter du comportement aux éléments du DOM</p></div></section><section id="types_de_directives"><h2>Types de directives</h2><div class="dlist"><dl><dt class="hdlist1">Composants </dt><dt class="hdlist1">Directive structurelle </dt><dd><div class="ulist"><ul><li><p>Change la mise en page en ajoutant, supprimant ou modifiant des éléments du DOM.</p></li><li><p>Préfixé par <code>*</code></p></li></ul></div></dd><dt class="hdlist1">Directives d&#8217;attribut </dt><dd><p>Change le comportement ou l&#8217;apparence d&#8217;une balise existante</p></dd></dl></div></section><section id="directives_tierces_et_propritaires"><h2>Directives tierces et propriétaires</h2><div class="ulist"><ul><li><p>Il est possible d&#8217;importer des directives de projets tiers</p></li><li><p>Ou de créer les siennes propres</p></li></ul></div></section></section>
+<section><section id="directive_ngforof"><h2>Directive <code>ngForOf</code></h2><div class="paragraph"><p>Instancie un fragment une fois par élément contenu dans une collection</p></div></section><section id="exemple_de_ngforof"><h2>Exemple de <code>ngForOf</code></h2><div class="listingblock"><div class="title">foo.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">export class Foo {
+  bar: string = "world"
+}</code></pre></div></div>
+<div class="listingblock"><div class="title">foo/foo.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  foos: Foo[];
+}</code></pre></div></div></section><section><div class="listingblock"><div class="title">foo/foo.component.html</div><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr *ngFor="let foo of foos"&gt;
+      &lt;td&gt;{{ foo.bar }}&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre></div></div></section><section id="variables_locales"><h2>Variables locales</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Nom</th><th class="tableblock halign-left valign-top">Type</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>index</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Index de l&#8217;élément</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>first</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code> lorsque l&#8217;élément est le premier élément de l&#8217;itération</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>last</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code> lorsque l&#8217;élément est le dernier élément</p></td></tr></table></section><section><table class="tableblock frame-all grid-all" style=""><colgroup><col><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Nom</th><th class="tableblock halign-left valign-top">Type</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>even</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code> lorsque l&#8217;index de l&#8217;élément est pair</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>odd</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code> lorsque l&#8217;index de l&#8217;élément est impair</p></td></tr></table></section><section id="utilisation_de_variable_locale"><h2>Utilisation de variable locale</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr *ngFor="let foo of foos; index as i"&gt;
+      &lt;td&gt;{{ i }}&lt;/td&gt;
+      &lt;td&gt;{{ foo.bar }}&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre></div></div></section></section>
+<section><section id="directive_ngif"><h2>Directive <code>ngIf</code></h2><div class="paragraph"><p>Inclut un fragment basé sur l&#8217;évaluation d&#8217;une expression</p></div></section><section id="exemple_de_ngif"><h2>Exemple de <code>ngIf</code></h2><div class="listingblock"><div class="title">foo/foo.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  bar: boolean;
+}</code></pre></div></div>
+<div class="listingblock"><div class="title">foo/foo.component.html</div><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;span *ngIf="bar"&gt;Hello world!&lt;/span&gt;</code></pre></div></div></section><section id="exemple_avec_else"><h2>Exemple avec <em>else</em></h2><div class="listingblock"><div class="title">foo/foo.component.html</div><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;span *ngIf="condition; else elseBlock"&gt;Hello world!&lt;/span&gt;
+&lt;ng-template #elseBlock&gt;
+  &lt;span&gt;Bye world!&lt;/span&gt;
+&lt;/ng-template&gt;</code></pre></div></div></section></section>
+<section><section id="directive_ngclass"><h2>Directive <code>ngClass</code></h2><div class="paragraph"><p>Ajoute des classes CSS à une balise basé sur l&#8217;évaluation d&#8217;une expression</p></div></section><section id="exemple_de_ngclass"><h2>Exemple de <code>ngClass</code></h2><div class="listingblock"><div class="title">foo/foo.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  bar: boolean;
+  isBaz(): boolean {
+    // ...
+  }
+}</code></pre></div></div>
+<div class="listingblock"><div class="title">foo/foo.component.html</div><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;div [class.baz]="isBaz()"&gt;
+  Hello world!
+&lt;/div&gt;</code></pre></div></div></section></section>
+<section><section id="directive_ngstyle"><h2>Directive <code>ngStyle</code></h2><div class="paragraph"><p>Ajoute un style CSS à une balise basé sur l&#8217;évaluation d&#8217;une expression</p></div></section><section id="exemple_de_ngstyle"><h2>Exemple de <code>ngStyle</code></h2><div class="listingblock"><div class="title">foo/foo.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  bar: boolean;
+  isBaz(): boolean {
+    // ...
+  }
+}</code></pre></div></div>
+<div class="listingblock"><div class="title">foo/foo.component.html</div><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;div [style.text-decoration ? "underline" : "none"]="bar"&gt;
+  Hello world!
+&lt;/div&gt;</code></pre></div></div></section></section>
+<section><section id="gnration_de_directive"><h2>Génération de directive</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="bash language-bash">ng generate directive &lt;name&gt;</code></pre></div></div></section><section id="structure_dune_directive"><h2>Structure d&#8217;une directive</h2><div class="listingblock"><div class="title">foo.pipe.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Directive({                 <i class="conum" data-value="1"></i><b>(1)</b>
+  selector: '[appFoo]'       <i class="conum" data-value="2"></i><b>(2)</b>
+})
+export class FooDirective {
+}</code></pre></div></div>
+<div class="colist arabic"><table><tr><td><i class="conum" data-value="1"></i><b>1</b></td><td>Directive indiqué par le décorateur <code>@Directive</code></td></tr><tr><td><i class="conum" data-value="2"></i><b>2</b></td><td>Nom de la directive dans le fragment</td></tr></table></div></section></section>
+<section><section id="event_binding"><h2><em>Event binding</em></h2><div class="paragraph"><p>Appelle une fonction lorsqu&#8217;un élément déclenche un évènement</p></div></section><section id="exemple_d_event_binding"><h2>Exemple d' <em>event binding</em></h2><div class="listingblock"><div class="title">foo/foo.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Component({
+  selector:    'app-foo',
+  templateUrl: './foo.component.html'
+})
+export class FooComponent {
+  click() { console.log("Clicked"); }
+  focus() { console.log("Focused"); }
+}</code></pre></div></div>
+<div class="listingblock"><div class="title">foo/foo.component.html</div><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;button (click)="click()"&gt;Click me!&lt;/button&gt;
+&lt;input (focus)="focus()" /&gt;</code></pre></div></div></section></section>
+<section><section id="pipes"><h2><em>Pipes</em></h2><div class="ulist"><ul><li><p>Fonction (simple) qui prend un paramètre en entrée et renvoie une valeur de retour</p></li><li><p>Appliqué via l&#8217;opérateur <em>pipe</em> : <code>|</code></p></li></ul></div></section><section id="pipes_existants"><h2><em>Pipes</em> existants</h2><div class="ulist"><ul><li><p><em>Pipes</em> de transformation de nombres</p></li><li><p><em>Pipes</em> de transformation de chaînes de caractères</p></li><li><p><em>Pipes</em> d&#8217;internationalisation</p></li><li><p><em>Pipes</em> divers</p></li></ul></div></section><section id="transformation_de_nombres"><h2>Transformation de nombres</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top"><em>Pipe</em></th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>percent</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Transforme le nombre en pourcentage</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>decimal</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Transforme le nombre en nombre décimal</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>currency</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Transforme le nombre en devise</p></td></tr></table></section><section id="transformation_de_chanes_de_caractres"><h2>Transformation de chaînes de caractères</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top"><em>Pipe</em></th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>lowerCase</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Convertit la chaîne en minuscules</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>upperCase</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Convertit la chaîne en majuscules</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>titleCase</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Convertit la chaîne en minuscules, avec la première lettre de chaque mot en majuscules</p></td></tr></table></section><section id="internationalisation"><h2>Internationalisation</h2><div class="ulist"><ul><li><p>Nécessite un paramètre supplémentaire de type tableau associatif</p></li><li><p>Retourne la valeur qui correspond à la clé d&#8217;entrée</p></li></ul></div>
+<table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top"><em>Pipe</em></th><th class="tableblock halign-left valign-top">Entrée</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>i18nSelect</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>i18nPlural</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td></tr></table></section><section id="divers"><h2>Divers</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top"><em>Pipe</em></th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>async</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Transforme un <code>Observable</code> en sa valeur observée</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>date</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Transforme une <code>Date</code> en chaîne formatée</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>slice</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Transforme un tableau en sous-tableau</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>json</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Transforme une structure JSON en chaîne</p></td></tr></table></section><section id="exemple_4"><h2>Exemple</h2><div class="listingblock"><div class="title">foo/foo.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">export class FooComponent {
+  today: Date = new Date();
+}</code></pre></div></div>
+<div class="listingblock"><div class="title">foo/foo.component.html</div><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;p&gt;Today is {{ today | date: 'dd/MM/yyyy' }}&lt;/p&gt;</code></pre></div></div></section><section id="gnration_de_pipe"><h2>Génération de <em>pipe</em></h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="bash language-bash">ng generate pipe &lt;name&gt;</code></pre></div></div></section><section id="structure_dun_pipe"><h2>Structure d&#8217;un <em>pipe</em></h2><div class="listingblock"><div class="title">foo.pipe.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Pipe({                                         <i class="conum" data-value="1"></i><b>(1)</b>
+  name: 'foo'                                   <i class="conum" data-value="2"></i><b>(2)</b>
+})
+export class FooPipe implements PipeTransform { <i class="conum" data-value="3"></i><b>(3)</b>
+
+  transform(value: any, args?: any): any {      <i class="conum" data-value="4"></i><b>(4)</b><i class="conum" data-value="5"></i><b>(5)</b>
+    return null;
+  }
+}</code></pre></div></div>
+<div class="colist arabic"><table><tr><td><i class="conum" data-value="1"></i><b>1</b></td><td><em>Pipe</em> indiqué par le décorateur <code>@Pipe</code></td></tr><tr><td><i class="conum" data-value="2"></i><b>2</b></td><td>Nom du <em>pipe</em> dans le fragment</td></tr><tr><td><i class="conum" data-value="3"></i><b>3</b></td><td>Implémentation de <code>PipeTransform</code> optionelle mais conseillée (comme pour toutes les interfaces)</td></tr><tr><td><i class="conum" data-value="4"></i><b>4</b></td><td><code>value</code> est l&#8217;objet en entrée</td></tr><tr><td><i class="conum" data-value="5"></i><b>5</b></td><td><code>args</code> est un (des) objet(s) supplémentaires optionnels</td></tr></table></div></section></section>
+<section><section id="services"><h2>Services</h2><div class="paragraph"><p>Classe manipulant des données concentré sur une fonctionnalité précise</p></div></section><section id="services_disponibles"><h2>Services disponibles</h2><div class="paragraph"><p>Enormément de services disponibles, dans différents modules</p></div></section><section id="gnration_de_service"><h2>Génération de service</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="bash language-bash">ng generate service &lt;name&gt;</code></pre></div></div></section><section id="structure_de_service"><h2>Structure de service</h2><div class="listingblock"><div class="title">foo.service.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Injectable({              <i class="conum" data-value="1"></i><b>(1)</b>
+  providedIn: 'root'       <i class="conum" data-value="2"></i><b>(2)</b>
+})
+export class FooService { }</code></pre></div></div>
+<div class="colist arabic"><table><tr><td><i class="conum" data-value="1"></i><b>1</b></td><td><code>@Injectable</code> n&#8217;indique pas un service, mais un élément injectable</td></tr><tr><td><i class="conum" data-value="2"></i><b>2</b></td><td>Périmètre de l&#8217;injection.
+<code>root</code> indique que la classe est disponible dans toute l&#8217;application</td></tr></table></div></section><section id="principe_dinjection"><h2>Principe d&#8217;injection</h2><div class="ulist"><ul><li><p>Pas d&#8217;instanciation "manuelle" (mot-clé <code>new</code>)</p></li><li><p>Le <em>framework</em> instancie les objets nécessaires</p></li><li><p>Et les injecte dans les objets qui en ont besoin au démarrage de l&#8217;application</p></li><li><p>Par défaut, il y a une <strong>unique</strong> instance de l&#8217;objet instancié</p></li></ul></div></section><section id="exemple_5"><h2>Exemple</h2><div class="listingblock"><div class="title">foo.service.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Injectable {
+  providedIn: 'root'
+}
+export class FooService { }</code></pre></div></div>
+<div class="listingblock"><div class="title">bar.service.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Injectable {
+  providedIn: 'root'
+}
+export class BarService {
+
+    constructor(private foo: FooService) { }
+}</code></pre></div></div></section></section>
+<section><section id="cycle_de_vie"><h2>Cycle de vie</h2><div class="olist arabic"><ol class="arabic"><li><p><code>changes</code></p></li><li><p><code>init</code></p></li><li><p><code>docCheck</code></p></li><li><p><code>afterContentInit</code></p></li><li><p><code>afterContentChecked</code></p></li><li><p><code>afterViewInit</code></p></li><li><p><code>afterViewChecked</code></p></li><li><p><code>destroy</code></p></li></ol></div></section><section id="ngoninit"><h2><code>ngOnInit()</code></h2><div class="olist arabic"><ol class="arabic"><li><p>Pour l&#8217;initialisation après l&#8217;instanciation</p><div class="ulist"><ul><li><p>Par exemple, récupérer de la donnée</p></li></ul></div></li><li><p>Pour la configuration du composant après l&#8217;injection</p></li></ol></div></section><section id="exemple_de_ngoninit"><h2>Exemple de <code>ngOnInit()</code></h2><div class="listingblock"><div class="title">foo.service.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Injectable { providedIn: 'root' }
+export class FooService {
+    getFoo(): string { /* ... */ }
+}</code></pre></div></div>
+<div class="listingblock"><div class="title">foo/foo.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Component({
+  selector: 'app-foo',
+  template: '&lt;p&gt;{{ foo }}&lt;/p&gt;'
+})
+export class FooComponent implements OnInit {
+    foo: string;
+    constructor(private service: FooService) { }
+    onInit() {
+        this.foo = this.service.getFoo();
+    }
+}</code></pre></div></div></section><section id="ngondestroy"><h2><code>ngOnDestroy()</code></h2><div class="paragraph"><p>Pour la libération de ressources</p></div></section><section id="exemple_de_ngondestroy"><h2>Exemple de <code>ngOnDestroy()</code></h2><div class="listingblock"><div class="title">bar/bar.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@Component({
+  selector: 'app-bar',
+  template: '&lt;p&gt;{{ bar | async }}&lt;/p&gt;'
+})
+export class BarComponent implements OnInit, OnDestroy {
+    bar: string;
+    constructor(private service: BarService) { }
+    onInit() {
+        this.service.getBar()
+                    .subscribe(bar =&gt; this.bar = bar);
+    }
+    onDestroy() {
+        this.service.getBar()
+                    .unsubscribe();
+    }
+}</code></pre></div></div></section></section>
+<section><section id="modules"><h2>Modules</h2><div class="paragraph"><p>Unité d&#8217;organisation qui délivre un ensemble cohérent de fonctionnalités techniques ou métier</p></div></section><section id="modules_disponibles"><h2>Modules disponibles</h2><div class="ulist"><ul><li><p>Module commun</p></li><li><p>Module de routage</p></li><li><p>Module client HTTP</p></li><li><p>Module de formulaire</p></li><li><p>etc.</p></li></ul></div></section><section id="gnration_de_module"><h2>Génération de module</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="bash language-bash">ng generate module &lt;name&gt;</code></pre></div></div></section><section id="structure_de_module"><h2>Structure de module</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">@NgModule({                  <i class="conum" data-value="1"></i><b>(1)</b>
+  imports: [                 <i class="conum" data-value="2"></i><b>(2)</b>
+    CommonModule
+  ],
+  declarations: []
+})
+export class FooModule { }</code></pre></div></div>
+<div class="colist arabic"><table><tr><td><i class="conum" data-value="1"></i><b>1</b></td><td><code>@NgModule</code> indique un module</td></tr><tr><td><i class="conum" data-value="2"></i><b>2</b></td><td>Tableau des modules dépendants</td></tr></table></div></section><section id="modularisation"><h2>Modularisation</h2><div class="ulist"><ul><li><p>Tout composant, directive, service, etc. généré doit être lié à un module</p></li><li><p>Par défaut, lié à l&#8217;unique module de l&#8217;application</p></li><li><p>S&#8217;il y a plus d&#8217;un module, il faut indiquer à quel module le nouveau code est lié :</p><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="bash language-bash">ng generate service foo --module=app</code></pre></div></div></li></ul></div></section><section id="module_commun"><h2>Module commun</h2><div class="paragraph"><p>Inclut toutes les directives courantes <code>ngIf</code>, <code>ngFor</code>, etc.</p></div></section></section>
+<section><section id="module_de_routage"><h2>Module de routage</h2><div class="paragraph"><p>Permet de naviguer dans des vues différentes</p></div></section><section id="route"><h2>Route</h2><div class="paragraph"><p>Paire chemin - composant</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="json language-json">{
+  path     : 'foo',
+  component: FooComponent
+}</code></pre></div></div></section><section id="configuration_du_routeur"><h2>Configuration du routeur</h2><div class="paragraph"><p>Via <code>RouterModule.forRoot()</code></p></div>
+<div class="listingblock"><div class="title">routing.module.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">const routes: Routes = [
+  { path: ''   , component: HomeComponent },
+  { path: 'foo', component: FooComponent },
+  { path: 'bar', component: BarComponent }
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes)
+  ]
+})
+export class AppModule { }</code></pre></div></div></section><section id="utilisation_dans_le_fragment"><h2>Utilisation dans le fragment</h2><div class="paragraph"><p>Via l&#8217;attribut <code>routerLink</code></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;ul&gt;
+    &lt;li&gt;&lt;a routerLink="foo"&gt;Foo&lt;/a&gt;&lt;/li&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+    &lt;li&gt;&lt;a routerLink="bar"&gt;Bar&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre></div></div>
+<div class="colist arabic"><table><tr><td><i class="conum" data-value="1"></i><b>1</b></td><td>Pas de <code>/</code> en début de chaîne</td></tr></table></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;p&gt;
+    &lt;router-outlet&gt;&lt;/router-outlet&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+&lt;/p&gt;</code></pre></div></div>
+<div class="colist arabic"><table><tr><td><i class="conum" data-value="1"></i><b>1</b></td><td>La balise sera remplacée par le composant configuré dans la route</td></tr></table></div></section><section id="caractres_joker"><h2>Caractères joker</h2><div class="paragraph"><p><code>**</code> joue le rôle de <em>catch all</em></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">const routes: Routes = [
+  { path: 'foo', component: FooComponent },
+  { path: 'bar', component: BarComponent },
+  { path: '**' , component: NotFoundComponent }
+];</code></pre></div></div>
+<div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa fa-warning" title="Warning"></i></td><td class="content">Les routes sont ordonnées !</td></tr></table></div></section><section id="chemin_paramtr"><h2>Chemin paramétré</h2><div class="listingblock"><div class="title">routing.module.ts</div><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">const routes: Routes = [
+  { path: 'person/:id', component: PersonDetailComponent }
+];</code></pre></div></div>
+<div class="listingblock"><div class="title">person/person-detail.component.html</div><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;a routerLink="person/{{ index }}"&gt;Person&lt;/a&gt;</code></pre></div></div>
+<div class="listingblock"><div class="title">person/person-detail.component.ts</div><div class="content"><pre class="highlight"><code data-noescape class="html language-html">export class PersonDetailComponent {
+
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    let id = +this.route.snapshot.paramMap.get('id');
+  }
+}</code></pre></div></div></section><section id="proprits_supplmentaires"><h2>Propriétés supplémentaires</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">const routes: Routes = [
+  {
+    path: 'foo',
+    component: XComponent,
+    data: { title: 'Foo' } <i class="conum" data-value="1"></i><b>(1)</b>
+  },{
+    path: 'bar',
+    component: XComponent,
+    data: { title: 'Bar' } <i class="conum" data-value="1"></i><b>(1)</b>
+  }
+];</code></pre></div></div>
+<div class="colist arabic"><table><tr><td><i class="conum" data-value="1"></i><b>1</b></td><td>Récupéré via <code>route.snapshot.data.title</code></td></tr></table></div></section></section>
+<section><section id="intgration_rxjs"><h2>Intégration RxJS</h2><div class="paragraph"><p>Angular intègre nativement le <em>framework</em> <a href="https://rxjs-dev.firebaseapp.com/" target="_blank">RxJS</a></p></div><div class="quoteblock"><blockquote>RxJS is a library for reactive programming using Observables, to make it easier to compose asynchronous or callback-based code.</blockquote><div class="attribution">&#8212; https://rxjs-dev.firebaseapp.com/</div></div></section><section id="bloquant_et_non_bloquant"><h2>Bloquant et non-bloquant</h2><div class="dlist"><dl><dt class="hdlist1">Bloquant</dt><dd><p>L&#8217;exécution de code JavaScript doit attendre jusqu&#8217;à ce qu&#8217;une opération tierce se termine.
+On parle de code synchrone.</p></dd><dt class="hdlist1">Non-bloquant</dt><dd><p>Au contraire, un code non-bloquant (ou asynchrone) n&#8217;attend pas la fin d&#8217;une telle opération.</p></dd></dl></div></section><section id="exemple_de_code_asynchrone"><h2>Exemple de code asynchrone</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">let html = download('http://www.lolcats.com/')
+// picture is undefined
+
+download('http://www.lolcats.com/', (error, html) =&gt; { <i class="conum" data-value="1"></i><b>(1)</b>
+  if (error) {
+    console.error('Download error!', error);
+  } else {
+    console.log('Download finished', html);
+  }
+});</code></pre></div></div>
+<div class="colist arabic"><table><tr><td><i class="conum" data-value="1"></i><b>1</b></td><td>Fonction de <em>callback</em></td></tr></table></div></section><section id="callback_hell"><h2><a href="http://callbackhell.com/" target="_blank">Callback hell</a></h2><div class="paragraph"><p>Lorsque plusieurs appels de fonctions de <em>callback</em>  doivent être chaînés</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">foo('root', (a) =&gt; {
+  bar(a, (b) =&gt; {
+    baz(b, (c) =&gt; {
+      qux(c, (d) =&gt; {
+        // Do something with d
+      });
+    });
+  });
+});</code></pre></div></div></section><section id="alternatives_aux_callbacks"><h2>Alternatives aux <em>callbacks</em></h2><div class="ulist"><ul><li><p><em>Promises</em></p></li><li><p><code>async</code> - <code>await</code></p></li><li><p>Reactive <em>framework</em> (RxJS)</p></li></ul></div></section><section id="patron_de_conception_observateur"><h2>Patron de conception Observateur</h2><div class="imageblock stretch" style=""><img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Observer.svg" alt="Observer" height="100%"></div></section><section id="concepts_rx"><h2>Concepts Rx</h2><div class="dlist"><dl><dt class="hdlist1"><code>Observable</code></dt><dd><p>Représente l&#8217;idée d&#8217;une collection de valeurs/évènements futurs</p></dd><dt class="hdlist1"><code>Observer</code></dt><dd><p>Collection de <em>callbacks</em> qui sait comment écouter les valeurs délivrées par l' <code>Observable</code></p></dd></dl></div></section><section id="concepts_rx_2"><h2>Concepts Rx</h2><div class="dlist"><dl><dt class="hdlist1"><code>Subscription</code></dt><dd><p>Représente l&#8217;exécution d&#8217;un <code>Observable</code>, utile pour annuler l&#8217;exécution</p></dd><dt class="hdlist1"><code>Subject</code></dt><dd><p>Equivalent d&#8217;un émetteur d&#8217;évènements</p></dd></dl></div></section><section id="diagramme_de_classes_rxjs"><h2>Diagramme de classes rxjs</h2><div class="imageblock stretch" style=""><img src="images/rx-class-diagram.svg" alt="rx class diagram" height="100%"></div></section><section id="exemple_de_code"><h2>Exemple de code</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">const source = range(1, 200); <i class="conum" data-value="1"></i><b>(1)</b>
+
+source.subscribe(i =&gt; console.log(i));</code></pre></div></div>
+<div class="colist arabic"><table><tr><td><i class="conum" data-value="1"></i><b>1</b></td><td>Emet la séquence d&#8217;évènements 1, 2, 3, &#8230;&#8203; jusqu&#8217;à 199</td></tr></table></div></section><section id="transformations"><h2>Transformations</h2><div class="ulist"><ul><li><p>Le résultat d&#8217;une opération asynchrone est rarement celui nécessaire</p></li><li><p>Par exemple, sous-structure JSON sur un appel REST</p></li></ul></div></section><section id="fonction_pipe"><h2>Fonction <code>pipe()</code></h2><div class="paragraph"><p><code>Observable.pipe()</code> permet de transformer un <code>Observable&lt;X&gt;</code> en <code>Observable&lt;Z&gt;</code> via une série de fonctions de transformation successives</p></div></section><section id="fonctions_de_transformation"><h2>Fonctions de transformation</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Fonction</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>map()</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Applique une fonction de transformation à chaque évènement et émet les valeurs de retour sous forme d' <code>Observable</code></p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>filter()</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Filtre les évènements émis par la source en émettant uniquement ceux qui répondent à un prédicat spécifique</p></td></tr></table></section><section id="fonctions_de_transformation_2"><h2>Fonctions de transformation</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Fonction</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>skip()</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Retourne un <code>Observable</code> qui saute les n premiers éléments émis par l' <code>Observable</code> source</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>take()</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Retourne un <code>Observable</code> qui conserve les n premiers éléments émis par l' <code>Observable</code> source</p></td></tr></table></section><section id="fonctions_de_transformation_3"><h2>Fonctions de transformation</h2><table class="tableblock frame-all grid-all" style=""><colgroup><col><col></colgroup><thead><tr><th class="tableblock halign-left valign-top">Fonction</th><th class="tableblock halign-left valign-top">Description</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>distinct()</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Retourne un <code>Observable</code> qui émet tous les évènements de la source qui sont distincts</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock"><code>tap()</code></p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Retourne un <code>Observable</code> identique à la source <strong>et</strong> exécute une fonction pour chaque évènement</p></td></tr></table></section><section id="rxjs_marbles"><h2><a href="http://rxmarbles.com/" target="_blank">RxJS marbles</a></h2><div class="paragraph"><p>Diagramme interactif d&#8217;Observables Rx</p></div>
+<div class="imageblock" style=""><img src="images/rx-marble.png" alt="rx marble"></div></section><section id="exemple_de_pipe"><h2>Exemple de <code>pipe()</code></h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">class Pair {
+  k: string; v: any;
+  constructor(k: string, v: any) { this.k = k; this.v = v; }
+}
+
+const routes$: Observable&lt;Pair&gt; = from([
+  new Pair('', '&lt;root&gt;'), new Pair('foo', 'Foo'),
+  new Pair('bar', 'Bar'), new Pair('baz', null),
+  new Pair('**', { foo: 'bar' })
+]);
+
+routes$.pipe(
+  filter(pair =&gt; pair.v != null),
+  map(pair =&gt; pair.k),
+  skip(2))</code></pre></div></div></section></section>
+<section><section id="module_de_client_http"><h2>Module de client HTTP</h2><div class="paragraph"><p>API permettant d&#8217;effectuer des requêtes HTTP de haut niveau</p></div></section><section id="diagramme_de_classes_http"><h2>Diagramme de classes HTTP</h2><div class="imageblock stretch" style=""><img src="images/http-request-class-diagram.svg" alt="http request class diagram" height="100%"></div></section><section id="exemple_dappel_http"><h2>Exemple d&#8217;appel HTTP</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="typescript language-typescript">class Response {
+  foo: number;
+  bar: string;
+  baz: string[];
+}
+
+http.get&lt;FooResponse&gt;('http://foo.com/').pipe(
+  map(response =&gt; response.bar)
+).subscribe(bar =&gt; console.log(bar));</code></pre></div></div></section></section></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/head.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'white',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/zoom-js/zoom.js', async: true },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/notes/notes.js', async: true }
+  ]
+});</script></body></html>
